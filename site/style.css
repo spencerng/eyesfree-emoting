@@ -27,3 +27,14 @@ body {
   height: 45vh;
   margin: 2rem 0;
 }
+
+.emoji {
+  height: 30vh;
+  padding: 2rem 1rem;
+}
+
+.trace {
+    margin: -2rem 0;
+  color: #707070;
+  font-size: 300px;
+}
