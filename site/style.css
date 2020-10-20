@@ -1,0 +1,29 @@
+body {
+  text-align: center;
+  font-family: 'Avenir Next';
+}
+
+.card {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.container {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.heading {
+  margin-bottom: 1rem;
+}
+
+.large_prompt {
+  padding: 1rem;
+  color: #3A4D8D;
+  font-size: 25px;
+}
+
+.logo {
+  height: 45vh;
+  margin: 2rem 0;
+}
