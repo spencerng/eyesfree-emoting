@@ -11,7 +11,11 @@ function onLoadEvent()
 
   var canvas = document.getElementById('myCanvas');
   canvas.width = document.body.scrollWidth * 0.9
-canvas.height = document.body.scrollHeight * 0.75
+  canvas.height = document.body.scrollHeight * 0.75
+  canvas.addEventListener("touchstart", touchStartEvent, false);
+  canvas.addEventListener("touchmove", touchMoveEvent, false);
+  canvas.addEventListener("touchend", touchEndEvent, false);
+
   _g = canvas.getContext('2d');
   _g.lineWidth = 3;
   _g.font = "16px Gentilis";
@@ -20,6 +24,20 @@ canvas.height = document.body.scrollHeight * 0.75
 
   _isDown = false;
 }
+
+function touchStartEvent(event) {
+   mouseDownEvent(event.touches[0].pageX, event.touches[0].pageY, 0)
+}
+
+function touchMoveEvent(event) {
+  mouseMoveEvent(event.touches[0].pageX, event.touches[0].pageY, 0);
+  event.preventDefault();
+}
+
+function touchEndEvent(event) {
+  mouseUpEvent(event.changedTouches[0].pageX, event.changedTouches[0].pageY, 0);
+}
+
 function getCanvasRect(canvas)
 {
   var w = canvas.width;
