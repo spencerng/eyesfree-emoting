@@ -1,3 +1,4 @@
+var performAutodetect;
 
 //
 // Startup
@@ -68,6 +69,7 @@ function getScrollY()
 //
 function mouseDownEvent(x, y, button)
 {
+  clearTimeout(performAutodetect);
   document.onselectstart = function() { return false; } // disable drag-select
   document.onmousedown = function() { return false; } // disable drag-select
   if (button <= 1)
@@ -87,6 +89,7 @@ function mouseDownEvent(x, y, button)
 }
 function mouseMoveEvent(x, y, button)
 {
+  clearTimeout(performAutodetect);
   if (_isDown)
   {
     x -= _rc.x - getScrollX();
@@ -105,7 +108,7 @@ function printPoints() {
   pointStr = pointStr.slice(0, -1) + ")"
   console.log(pointStr)
 }
-function mouseUpEvent(x, y, button)
+async function mouseUpEvent(x, y, button)
 {
   printPoints()
   document.onselectstart = function() { return true; } // enable drag-select
@@ -117,7 +120,13 @@ function mouseUpEvent(x, y, button)
       _isDown = false;
     }
   }
+
+  performAutodetect = setTimeout(function() {
+    detectEmoticon();
+  }, 1300)
+
 }
+
 function detectEmoticon() {
   var statusText = document.getElementsByClassName("status")[0]
   if (_points.length >= 10)
