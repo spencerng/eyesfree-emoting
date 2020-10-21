@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Stroke Example</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://cdn.rawgit.com/bgrins/TinyColor/master/tinycolor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <script>var exports = {};</script>
+    <script src="../js/qDollar.js"></script>
+    <script src="../js/shapeRecognize.js"></script>
+    <link rel="stylesheet" href="../style.css">
+  </head>
+  <body onload="onLoadEvent()">
+    
+      <h1>$Q Multistroke Recognizer</h1>
+      <h3 class="status">no emoticon detected</h3>
+      <button id="clear" onclick="onClickClearStrokes()">Clear</button>
+      <button onclick="detectEmoticon()">Detect</button><br>
+      <pre id='output'></pre>
+      <div style="">
+      <canvas id="myCanvas" height="500" width="500" style="background-color:#ffffff" onmousedown="mouseDownEvent(event.clientX, event.clientY, event.button)" onmousemove="mouseMoveEvent(event.clientX, event.clientY, event.button)" onmouseup="mouseUpEvent(event.clientX, event.clientY, event.button)" oncontextmenu="return false;">
+              
+            </canvas>
+
+    </div>
+  </body>
+</html>
