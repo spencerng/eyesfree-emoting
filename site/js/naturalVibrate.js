@@ -24,12 +24,12 @@ function composeVibrate(timesArr) {
 document.onclick = function sendEmojiPulse(e) {
 	var type = e.target.src
 	let mapping = {
-		"love": [[0.1, 0, 111], [0.85, 0, 12]], //:-O
+		"love": [[0.1, 0.05, 12], [0.1, 0.2, 12], [0.1, 0.05, 12], [0.1, 0, 12]], //:-O
 		"yay": [[0.6, 0, 111]], // :)
 		"laugh": [[0.4, 0.45, 111], [0.35, 0, 12]], // :D
-		"like": [[0.1, 0, 111]],
+		"like": [[0.1, 0, 12]],
 		"sad": [[0.9, 0.25, 12], [0.4, 0, 111]], // :((
-		"angry": [[0.2, 0.27, 0.111], [0.6, 0, 12]]// X-C
+		"angry": [[0.2, 0.27, 111], [0.6, 0, 12]]// X-C
 	};
 	var statusText = document.getElementsByClassName("status")[0]
 	
