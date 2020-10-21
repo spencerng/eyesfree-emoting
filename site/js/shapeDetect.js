@@ -81,10 +81,7 @@ function mouseDownEvent(x, y, button)
       _g.clearRect(0, 0, _rc.width, _rc.height);
     }
     _points[_points.length] = new Point(x, y, ++_strokeID);
-    var clr = "rgb(" + rand(0,200) + "," + rand(0,200) + "," + rand(0,200) + ")";
-    _g.strokeStyle = clr;
-    _g.fillStyle = clr;
-    _g.fillRect(x - 4, y - 3, 9, 9);
+    
   }
 
 }
@@ -143,17 +140,7 @@ function drawConnectedPoint(from, to)
   _g.closePath();
   _g.stroke();
 }
-function drawText(str)
-{
-  _g.fillStyle = "rgb(255,255,136)";
-  _g.fillRect(0, 0, _rc.width, 20);
-  _g.fillStyle = "rgb(0,0,255)";
-  _g.fillText(str, 1, 14);
-}
-function rand(low, high)
-{
-  return Math.floor((high - low + 1) * Math.random()) + low;
-}
+
 function round(n, d) // round 'n' to 'd' decimals
 {
   d = Math.pow(10, d);
