@@ -30,11 +30,10 @@ body {
 
 .emoji {
   height: 30vh;
-  padding: 2rem 1rem;
 }
 
 .trace {
-    margin: -2rem 0;
+  margin: auto;
   color: #707070;
   font-size: 300px;
 }
@@ -51,4 +50,12 @@ canvas {
 
 html, body {
   height: 95%
+}
+
+.ellipse {
+    margin: auto;
+    height: 30vh;
+    background-color: #45597e;
+    width: 30vh;
+    border-radius: 50%;
 }
