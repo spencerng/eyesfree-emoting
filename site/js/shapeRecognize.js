@@ -10,6 +10,8 @@ function onLoadEvent()
   _r = new DollarRecognizer();
 
   var canvas = document.getElementById('myCanvas');
+  canvas.width = document.body.scrollWidth * 0.9
+canvas.height = document.body.scrollHeight * 0.75
   _g = canvas.getContext('2d');
   _g.lineWidth = 3;
   _g.font = "16px Gentilis";
