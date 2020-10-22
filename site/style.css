@@ -10,7 +10,7 @@ body {
 
 .container {
   text-align: center;
-  padding: 2rem 1rem;
+  padding: 2rem 1rem 1rem;
 }
 
 .heading {
@@ -29,13 +29,17 @@ body {
 }
 
 .emoji {
-  height: 30vh;
+  height: 20vh;
 }
 
 .trace {
-  margin: auto;
-  color: #707070;
-  font-size: 300px;
+  position: absolute;
+  z-index: 0;
+  text-align: center;
+  top: 40vh;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
 }
 
 canvas {
@@ -49,13 +53,19 @@ canvas {
 }
 
 html, body {
-  height: 95%
+  height: 95%;
 }
 
 .ellipse {
-    margin: auto;
-    height: 30vh;
+    margin: 0 auto;
+    height: 20vh;
+    width: 20vh;
     background-color: #45597e;
-    width: 30vh;
     border-radius: 50%;
+    margin-bottom: 2vh;
+}
+
+#myCanvas {
+  z-index: 999;
+  border: 5px solid #a5bde6;
 }
