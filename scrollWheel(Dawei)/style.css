@@ -31,8 +31,15 @@ body {
   width: 31.2em;
   height: 31.2em;
   position: relative;
+  
+  
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 .dial-arrow {
+	user-select: none;
   transform: rotate(45deg);
   border-radius: 20% 100% 100% 100%;
   background-color: #FF6F27;
@@ -55,6 +62,7 @@ body {
 }
 
 .item-1 {
+  user-select: none;
   position: absolute;
   display: block;
   transform: rotate(0.1666666turn) translate(-12em);
@@ -73,6 +81,7 @@ body {
 }
 
 .item-2 {
+	user-select: none;
   position: absolute;
   display: block;
   transform: rotate(0.33333333333turn) translate(-12em);
@@ -91,6 +100,7 @@ body {
 }
 
 .item-3 {
+	user-select: none;
   position: absolute;
   display: block;
   transform: rotate(0.5turn) translate(-12em);
@@ -109,6 +119,7 @@ body {
 }
 
 .item-4 {
+	user-select: none;
   position: absolute;
   display: block;
   transform: rotate(0.666666666turn) translate(-12em);
@@ -127,6 +138,7 @@ body {
 }
 
 .item-5 {
+	user-select: none;
   position: absolute;
   display: block;
   transform: rotate(0.8333333turn) translate(-12em);
@@ -145,6 +157,7 @@ body {
 }
 
 .item-6 {
+	user-select: none;
   position: absolute;
   display: block;
   transform: rotate(1turn) translate(-12em);
