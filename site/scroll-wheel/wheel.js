@@ -1,15 +1,16 @@
-var emoji = "None"
+var lastTouched = undefined;
+var emojis = ["yay", "sad", "angry", "laugh", "love", "like"]
 
 function onLoadEvent()
 {
   var canvas = document.getElementById('myCanvas');
   
   document.onmousedown = mouseDown
-
   document.onmouseup = mouseUp
 
+
   canvas.addEventListener("touchstart", touchStartEvent, false);
-//  canvas.addEventListener("touchmove", touchMoveEvent, false);
+  canvas.addEventListener("touchmove", touchMoveEvent, false);
   canvas.addEventListener("touchend", touchEndEvent, false);
 
   let items = document.getElementsByClassName("item")
@@ -20,13 +21,16 @@ function onLoadEvent()
       console.log("mouseover")
     }
   }
+
 }
 function mouseUp(event) {
   var wheelSel = document.getElementById("wheel");
   wheelSel.style.display = 'none';
 
-  var emojis = ["yay", "sad", "angry", "laugh", "love", "like"]
-  if (emojis.includes(event.target.id)) {
+  if (emojis.includes(lastTouched)) {
+    updateEmoji(lastTouched);
+    lastTouched = undefined;
+  } else if (emojis.includes(event.target.id)) {
     updateEmoji(event.target.id);  
   }
   
@@ -46,11 +50,9 @@ function mouseDown(event) {
     wheelSel.style.display = 'block';
     var x = event.pageX;
     var y = event.pageY;
-    console.log(x,y)
     
     var width = wheelSel.scrollWidth;
     var height = wheelSel.scrollHeight;
-    console.log(width, height)
 
     wheelSel.style.display = 'block';
     wheelSel.style.position = 'absolute';
@@ -68,5 +70,16 @@ function touchStartEvent(event) {
 
 function touchEndEvent(event) {
   console.log(event.changedTouches[0])
-    mouseUp(event.changedTouches[0])
+  mouseUp(event.changedTouches[0])
+}
+
+function touchMoveEvent(event) {
+  var touch = event.touches[0]
+  var elem = document.elementFromPoint(touch.clientX, touch.clientY)
+
+  if (!(elem.id === lastTouched) && emojis.includes(elem.id)) {
+    vibrateFreq(0.1, 75);
+  }
+
+  lastTouched = elem.id;
 }
