@@ -65,7 +65,7 @@ body {
   user-select: none;
   position: absolute;
   display: block;
-  transform: rotate(0.1666666turn) translate(-6.5em);
+  transform: rotate(0.1666666turn) translate(-6.5em) rotate(-0.1666666turn);
 }
 .item-1:hover ~ .dial-arrow {
   transform: rotate(0.075turn) !important;

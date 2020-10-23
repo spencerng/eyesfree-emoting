@@ -2,84 +2,71 @@ var emoji = "None"
 
 function onLoadEvent()
 {
-
   var canvas = document.getElementById('myCanvas');
+  
+  document.onmousedown = mouseDown
+
+  document.onmouseup = mouseUp
+
   canvas.addEventListener("touchstart", touchStartEvent, false);
-  canvas.addEventListener("touchmove", touchMoveEvent, false);
+//  canvas.addEventListener("touchmove", touchMoveEvent, false);
   canvas.addEventListener("touchend", touchEndEvent, false);
 
-  document.onmousedown = function mouseDown(event) {
-    document.getElementById("wheel").style.display = 'block';
-    var x = event.clientX;
-    var y = event.clientY;
-    document.getElementById("x").innerHTML = x;
-    document.getElementById("y").innerHTML = y;
+  let items = document.getElementsByClassName("item")
+
+  for (var i = 0; i < items.length; i++) {
+    items[i].onmouseover = function haptic() {
+      vibrateFreq(0.1, 75);
+      console.log("mouseover")
+    }
+  }
+}
+function mouseUp(event) {
+  var wheelSel = document.getElementById("wheel");
+  wheelSel.style.display = 'none';
+
+  var emojis = ["yay", "sad", "angry", "laugh", "love", "like"]
+  if (emojis.includes(event.target.id)) {
+    updateEmoji(event.target.id);  
+  }
   
-    
+}
+function vibrateFreq(duration, freq) {
+  var pattern = [];
+  var halfCycle = (1 / freq) / 2;
+  var cycles = Math.ceil(duration * freq)
+  for (var i = 0; i < cycles * 2; i++) {
+    // We multiply by 1k for milliseconds
+    pattern.push(halfCycle * 1000)
+  }
+  return pattern
+}
+function mouseDown(event) {
     var wheelSel = document.getElementById("wheel");
-    var width = wheelSel.offsetWidth;
-    var height = wheelSel.offsetHeight;
+    wheelSel.style.display = 'block';
+    var x = event.pageX;
+    var y = event.pageY;
+    console.log(x,y)
+    
+    var width = wheelSel.scrollWidth;
+    var height = wheelSel.scrollHeight;
+    console.log(width, height)
 
     wheelSel.style.display = 'block';
     wheelSel.style.position = 'absolute';
     wheelSel.style.left = x - width/2 + 'px'
     wheelSel.style.top = y - height/2 + 'px'
   }
-}
-
-function ab1_Click() {
-   var vid1 = document.getElementById("wheel");
-   if (vid1.style.visibility == "visible") { v = "hidden"; }
-   else{
-	   v = "visible"
-   }
-   vid1.style.visibility =  v; 
-} 
-
-function mouseUp() {
-  document.getElementById("wheel").style.display = 'none';
-}
-
-
-function foo() {
-	document.getElementById("wheel").style.display = "none";
-}
-
-function myFunction() {
-  var x = document.getElementById("wheel");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-  }
-}
-
-
-function mouseUp1() {
-
-    var wheelSel = document.getElementById("wheel");
-    wheelSel.style.display = 'none';
-    wheelSel.style.position = 'absolute';
-}
-
-
-function myFunction1() {
-  document.getElementById("demo").innerHTML = emoji;
-}
 
 function updateEmoji(em){
-	document.getElementById("update").innerHTML = em;
+  document.getElementById("update").innerHTML = em;
 }
 
 function touchStartEvent(event) {
-   mouseDownEvent(event.touches[0].pageX, event.touches[0].pageY, 0)
-}
-
-function touchMoveEvent(event) {
-  mouseMoveEvent(event.touches[0].pageX, event.touches[0].pageY, 0);
-  event.preventDefault();
+    mouseDown(event.touches[0]) 
 }
 
 function touchEndEvent(event) {
-  mouseUpEvent(event.changedTouches[0].pageX, event.changedTouches[0].pageY, 0);
+  console.log(event.changedTouches[0])
+    mouseUp(event.changedTouches[0])
 }
