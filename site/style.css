@@ -155,3 +155,7 @@ html, body {
 .item-6 {
   transform: rotate(0.9166666turn) translate(-7em) rotate(-0.9166666turn);
 }
+
+.no-scroll {
+  overscroll-behavior: none;
+}
