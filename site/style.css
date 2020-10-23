@@ -3,6 +3,10 @@ body {
   font-family: 'Avenir Next';
 }
 
+.blue_button {
+  margin: 0 20px;
+}
+
 .card {
   margin: 0 auto;
   width: 80%;
@@ -29,14 +33,15 @@ body {
 }
 
 .emoji {
-  height: 20vh;
+  height: 15vh;
+  margin-top: 2.5vh;
 }
 
 .trace {
   position: absolute;
   z-index: -1;
   text-align: center;
-  top: 40vh;
+  top: 45vh;
   left: 50%;
   margin-left: -100px;
   width: 200px;
@@ -53,7 +58,7 @@ canvas {
 }
 
 html, body {
-  height: 94%;
+  height: 85%;
 }
 
 .ellipse {

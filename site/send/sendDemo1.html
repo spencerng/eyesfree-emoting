@@ -22,10 +22,10 @@
       <img src="../assets/like.png" alt="emoji" class="emoji">
     </div>
 
-    <h3 class="status">no emoticon detected</h3>
-    <div>
-      <button onclick="onClickClearStrokes()">Clear</button>
-      <button onclick="replaceTraceImg()">Next</button>
+    <h4 class="status">no emoticon detected</h4>
+    <div style="margin-bottom: 8px;">
+      <button class="blue_button" onclick="onClickClearStrokes()">Clear</button>
+      <button class="blue_button" onclick="replaceTraceImg()">Next</button>
     </div>
     
 
@@ -49,23 +49,30 @@
   <script>
     function replaceTraceImg() {
       onClickClearStrokes();
-      var imgReplace = document.getElementsByClassName("trace")[0];
+      var traceReplace = document.getElementsByClassName("trace")[0];
+      var emojiReplace = document.getElementsByClassName("emoji")[0];
 
-      if (imgReplace.src.includes("_like")) {
-        imgReplace.src = "../assets/trace_laugh.png";
-      } else if (imgReplace.src.includes("_laugh")) {
-        imgReplace.src = "../assets/trace_sad.png";
-      } else if (imgReplace.src.includes("_sad")) {
-        imgReplace.src = "../assets/trace_angry.png";
-      } else if (imgReplace.src.includes("_angry")) {
-        imgReplace.src = "../assets/trace_love.png";
-      } else if (imgReplace.src.includes("_love")) {
-        imgReplace.src = "../assets/trace_yay.png";
+      if (traceReplace.src.includes("_like")) {
+        traceReplace.src = "../assets/trace_laugh.png";
+        emojiReplace.src = "../assets/laugh.png"
+      } else if (traceReplace.src.includes("_laugh")) {
+        traceReplace.src = "../assets/trace_sad.png";
+        emojiReplace.src = "../assets/sad.png"
+      } else if (traceReplace.src.includes("_sad")) {
+        traceReplace.src = "../assets/trace_angry.png";
+        emojiReplace.src = "../assets/angry.png"
+      } else if (traceReplace.src.includes("_angry")) {
+        traceReplace.src = "../assets/trace_love.png";
+        emojiReplace.src = "../assets/love.png"
+      } else if (traceReplace.src.includes("_love")) {
+        traceReplace.src = "../assets/trace_yay.png";
+        emojiReplace.src = "../assets/yay.png"
       } else {
-        imgReplace.src = "../assets/trace_like.png";
+        traceReplace.src = "../assets/trace_like.png";
+        emojiReplace.src = "../assets/like.png"
       }
 
-      imgReplace.style.visibility = "visible";
+      traceReplace.style.visibility = "visible";
     }
   </script>
 </body>

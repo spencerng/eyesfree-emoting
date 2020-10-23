@@ -161,4 +161,7 @@ function onClickClearStrokes()
   _points.length = 0;
   _strokeID = 0;
   _g.clearRect(0, 0, _rc.width, _rc.height);
+  
+  var statusText = document.getElementsByClassName("status")[0]
+  statusText.innerHTML = 'no emoticon detected'
 }
