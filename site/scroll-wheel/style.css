@@ -28,9 +28,9 @@ body {
   font-size: 1rem;
   border: 0.5em solid white;
   border-radius: 100%;
-  width: 18em;
-  height: 18em;
-  position: relative;
+  width: 19em;
+  height: 19em;
+  position: absolute;
   
   
   flex-direction: column;
