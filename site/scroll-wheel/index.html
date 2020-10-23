@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Scroll Wheel Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=2">
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+<link rel='stylesheet' href='https://rawgit.com/jwandrews/f1f4e6152799777b3a36f8afb376e3cc/raw/040fed47eca3505fc1c84da8702232be95e0901b/gemini-css-2.0.css'><link rel="stylesheet" href="./style.css">
+<script src="wheel.js"></script> 
+
+</head>
+<body  onload="onLoadEvent()">
+<!-- partial:index.partial.html -->
+<div class="l-row">
+  <div class="l-column--medium-6 l-column--medium-offset-3 align-center">
+    
+	<h2 class="hN c-g5">Emoji Selected: <p id="update">None</p></h2>
+	
+    <div id = "wheel" class="dial-wrapper" style="display:none;" >
+      <div class="dial-items">
+        <span class="item item-1"><input id="love" type="image" src="../assets/love.png" alt="Submit" width="60" height="60"></span>
+        <span class="item item-2"><input id="yay" type="image" src="../assets/yay.png" alt="Submit" width="60" height="60"></span>
+        <span class="item item-3"><input id="laugh" type="image" src="../assets/laugh.png" alt="Submit" width="60" height="60"></span>
+        <span class="item item-4"><input id="like" type="image" src="../assets/like.png" alt="Submit" width="60" height="60"></span>
+        <span class="item item-5"><input id="sad" type="image" src="../assets/sad.png" alt="Submit" width="60" height="60"></span>
+		<span class="item item-6"><input id="angry" type="image" src="../assets/angry.png" alt="Submit" width="60" height="60"></span>
+      </div>
+    </div>
+	<p class="hN c-g5" id="demo"></p>
+	<canvas  id="myCanvas" width="1000" height="500" style="border:1px solid #d3d3d3;"></canvas>
+  </div>
+</div>
+<!-- partial -->
+  
+
+</body>
+</html>
