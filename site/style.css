@@ -3,18 +3,33 @@ body {
   font-family: 'Avenir Next';
 }
 
-.blue_button {
-  margin: 0 20px;
-}
 
 .card {
   margin: 0 auto;
   width: 80%;
 }
 
-.outer {
-  text-align: center;
-  padding: 1.5rem 1rem 1rem;
+.ellipse {
+  margin: 0 auto;
+  height: 18vh;
+  width: 18vh;
+  background-color: #45597e;
+  border-radius: 50%;
+  margin-bottom: 2vh;
+}
+
+.emoji {
+  height: 13vh;
+  margin-top: 2.5vh;
+}
+
+.emoji_name {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 20px;
+  font-weight: 500;
+  color: #3A4D8D;
 }
 
 .heading {
@@ -32,23 +47,9 @@ body {
   margin: 2rem 0;
 }
 
-.emoji {
-  height: 15vh;
-  margin-top: 2.5vh;
-}
-
-.trace {
-  position: absolute;
-  z-index: -1;
+.outer {
   text-align: center;
-  top: 45vh;
-  left: 50%;
-  margin-left: -100px;
-  width: 200px;
-}
-
-canvas {
-  border: 5px solid #a5bde6;
+  padding: 1.5rem 1rem 1rem;
 }
 
 .test {
@@ -57,15 +58,30 @@ canvas {
   margin: 0.25rem;
 }
 
-html, body {
-  height: 85%;
+.status {
+  margin: 1.25rem 0;
 }
 
-.ellipse {
-    margin: 0 auto;
-    height: 20vh;
-    width: 20vh;
-    background-color: #45597e;
-    border-radius: 50%;
-    margin-bottom: 5vh;
+.top_left {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.trace {
+  position: absolute;
+  z-index: -1;
+  text-align: center;
+  top: 48vh;
+  left: 50%;
+  margin-left: -95px;
+  width: 190px;
+}
+
+canvas {
+  border: 5px solid #a5bde6;
+}
+
+html, body {
+  height: 85%;
 }
