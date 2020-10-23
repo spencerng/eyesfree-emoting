@@ -8,9 +8,9 @@ body {
   width: 80%;
 }
 
-.container {
+.outer {
   text-align: center;
-  padding: 2rem 1rem 1rem;
+  padding: 1.5rem 1rem 1rem;
 }
 
 .heading {
@@ -34,7 +34,7 @@ body {
 
 .trace {
   position: absolute;
-  z-index: 0;
+  z-index: -1;
   text-align: center;
   top: 40vh;
   left: 50%;
@@ -43,7 +43,7 @@ body {
 }
 
 canvas {
-   border:1px solid red;
+  border: 5px solid #a5bde6;
 }
 
 .test {
@@ -53,7 +53,7 @@ canvas {
 }
 
 html, body {
-  height: 95%;
+  height: 94%;
 }
 
 .ellipse {
@@ -62,10 +62,5 @@ html, body {
     width: 20vh;
     background-color: #45597e;
     border-radius: 50%;
-    margin-bottom: 2vh;
-}
-
-#myCanvas {
-  z-index: 999;
-  border: 5px solid #a5bde6;
+    margin-bottom: 5vh;
 }
