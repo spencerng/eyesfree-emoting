@@ -2,15 +2,29 @@ var emoji = "None"
 
 function onLoadEvent()
 {
-  _points = new Array(); // point array for current stroke
-  _strokeID = 0;
-  _r = new DollarRecognizer();
 
   var canvas = document.getElementById('myCanvas');
   canvas.addEventListener("touchstart", touchStartEvent, false);
   canvas.addEventListener("touchmove", touchMoveEvent, false);
   canvas.addEventListener("touchend", touchEndEvent, false);
 
+  document.onmousedown = function mouseDown(event) {
+    document.getElementById("wheel").style.display = 'block';
+    var x = event.clientX;
+    var y = event.clientY;
+    document.getElementById("x").innerHTML = x;
+    document.getElementById("y").innerHTML = y;
+  
+    
+    var wheelSel = document.getElementById("wheel");
+    var width = wheelSel.offsetWidth;
+    var height = wheelSel.offsetHeight;
+
+    wheelSel.style.display = 'block';
+    wheelSel.style.position = 'absolute';
+    wheelSel.style.left = x - width/2 + 'px'
+    wheelSel.style.top = y - height/2 + 'px'
+  }
 }
 
 function ab1_Click() {
@@ -21,10 +35,6 @@ function ab1_Click() {
    }
    vid1.style.visibility =  v; 
 } 
-
-function mouseDown() {
-	document.getElementById("wheel").style.display = 'block';
-}
 
 function mouseUp() {
   document.getElementById("wheel").style.display = 'none';
@@ -44,20 +54,6 @@ function myFunction() {
   }
 }
 
-function mouseDown1() {
-    var x = event.clientX;
-    var y = event.clientY;
-	document.getElementById("x").innerHTML = x;
-	document.getElementById("y").innerHTML = y;
-	
-	var width = document.body.clientWidth;
-	var height = document.body.clientHeight;
-    var wheelSel = document.getElementById("wheel");
-    wheelSel.style.display = 'block';
-    wheelSel.style.position = 'absolute';
-	wheelSel.style.left = x-width/2 + 100 + 'px'
-	wheelSel.style.top = y-200 + 'px'
-}
 
 function mouseUp1() {
 

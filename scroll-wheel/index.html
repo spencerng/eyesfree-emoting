@@ -2,7 +2,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Radial Wheel Selector</title>
+  <title>Scroll Wheel Test</title>
   <meta name="viewport" content="width=device-width, initial-scale=2">
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
@@ -14,11 +14,7 @@
 <!-- partial:index.partial.html -->
 <div class="l-row">
   <div class="l-column--medium-6 l-column--medium-offset-3 align-center">
-    <div class="hgroup rule pad full">
-      <h1 class="hN c-g5">Emoji Scroll Wheel</h1>
-    </div>
     
-	<h1 class="hN c-g5">PICK EMOJI</h1>
 	<h2 class="hN c-g5">Emoji Selected: <p id="update">None</p></h2>
 	<p class="hN c-g5" id="x" hidden>None</p>
 	<p class="hN c-g5" id="y" hidden>None</p>
@@ -35,7 +31,7 @@
       </div>
     </div>
 	<p class="hN c-g5" id="demo"></p>
-	<canvas ontouchstart = "mouseDown1(event)" ontouchend = "mouseUp1(event)" onmousedown="mouseDown1(event)" onmouseup="mouseUp1(event)" id="myCanvas" width="1000" height="500" style="border:1px solid #d3d3d3;"></canvas>
+	<canvas  ontouchend = "mouseUp1(event)"  onmouseup="mouseUp1(event)" id="myCanvas" width="1000" height="500" style="border:1px solid #d3d3d3;"></canvas>
   </div>
 </div>
 <!-- partial -->
