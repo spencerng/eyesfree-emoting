@@ -12,7 +12,9 @@ function onLoadEvent()
   canvas.addEventListener("touchstart", touchStartEvent, false);
   canvas.addEventListener("touchmove", touchMoveEvent, false);
   canvas.addEventListener("touchend", touchEndEvent, false);
-
+  canvas.width = document.body.scrollWidth * 0.9
+  canvas.height = document.body.scrollHeight * 0.75
+  
   let items = document.getElementsByClassName("item")
 
   for (var i = 0; i < items.length; i++) {
@@ -43,7 +45,7 @@ function vibrateFreq(duration, freq) {
     // We multiply by 1k for milliseconds
     pattern.push(halfCycle * 1000)
   }
-  return pattern
+  navigator.vibrate(pattern);
 }
 function mouseDown(event) {
   vibrateFreq(0.075, 20);
