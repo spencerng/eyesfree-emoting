@@ -22,10 +22,17 @@
       <img src="../assets/like.png" alt="emoji" class="emoji">
     </div>
 
+    <div class="emoji_name">1. Like</div>
+
+    <!-- <button class="top_left btn btn-success" onclick="goToTest()">Ready</button> -->
+
     <h4 class="status">no emoticon detected</h4>
-    <div style="margin-bottom: 8px;">
-      <button class="blue_button" onclick="onClickClearStrokes()">Clear</button>
-      <button class="blue_button" onclick="replaceTraceImg()">Next</button>
+
+    <div style="margin: 1rem 0">
+      <button class="btn btn-success" onclick="goToTest()">Finish</button>
+      <button class="button_margin btn" onclick="onClickClearStrokes()">Clear</button>
+      <button class="btn btn-info" onclick="prevEmoticon()"><< Prev</button>
+      <button class="btn btn-info" onclick="nextEmoticon()">Next >></button>
     </div>
     
 
@@ -47,32 +54,40 @@
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
   <script>
-    function replaceTraceImg() {
+    var emoticonIndex = 0;
+    var emoticonsInfo = [];
+    var emoticons = ['like', 'laugh', 'sad', 'angry', 'love', 'yay'];
+    for (var i = 0; i < 6; i++) {
+      emoticonsInfo.push({
+        trace: "../assets/trace_" + emoticons[i] + ".png",
+        emoji: "../assets/" + emoticons[i] + ".png"
+      })
+    }
+
+    var traceReplace = document.getElementsByClassName("trace")[0];
+    var emojiReplace = document.getElementsByClassName("emoji")[0];
+    var nameText = document.getElementsByClassName("emoji_name")[0];
+
+    function nextEmoticon() {
       onClickClearStrokes();
-      var traceReplace = document.getElementsByClassName("trace")[0];
-      var emojiReplace = document.getElementsByClassName("emoji")[0];
+      emoticonIndex = (emoticonIndex + 1) % 6;
 
-      if (traceReplace.src.includes("_like")) {
-        traceReplace.src = "../assets/trace_laugh.png";
-        emojiReplace.src = "../assets/laugh.png"
-      } else if (traceReplace.src.includes("_laugh")) {
-        traceReplace.src = "../assets/trace_sad.png";
-        emojiReplace.src = "../assets/sad.png"
-      } else if (traceReplace.src.includes("_sad")) {
-        traceReplace.src = "../assets/trace_angry.png";
-        emojiReplace.src = "../assets/angry.png"
-      } else if (traceReplace.src.includes("_angry")) {
-        traceReplace.src = "../assets/trace_love.png";
-        emojiReplace.src = "../assets/love.png"
-      } else if (traceReplace.src.includes("_love")) {
-        traceReplace.src = "../assets/trace_yay.png";
-        emojiReplace.src = "../assets/yay.png"
-      } else {
-        traceReplace.src = "../assets/trace_like.png";
-        emojiReplace.src = "../assets/like.png"
-      }
+      traceReplace.src = emoticonsInfo[emoticonIndex].trace;
+      emojiReplace.src = emoticonsInfo[emoticonIndex].emoji;
+      nameText.innerHTML = (emoticonIndex + 1) + '. ' + emoticons[emoticonIndex];
+    }
 
-      traceReplace.style.visibility = "visible";
+    function prevEmoticon() {
+      onClickClearStrokes();
+      emoticonIndex = (emoticonIndex + 5) % 6;
+
+      traceReplace.src = emoticonsInfo[emoticonIndex].trace;
+      emojiReplace.src = emoticonsInfo[emoticonIndex].emoji;
+      nameText.innerHTML = (emoticonIndex + 1) + '. ' + emoticons[emoticonIndex];
+    }
+
+    function goToTest() {
+      window.alert("By clicking OK, you confirm that you have learned this method of sending emoticons and are ready to use them in a study trial.")
     }
   </script>
 </body>
