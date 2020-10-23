@@ -1,5 +1,6 @@
 var lastTouched = undefined;
 var emojis = ["yay", "sad", "angry", "laugh", "love", "like"]
+var showWheel;
 
 function onLoadEvent()
 {
@@ -19,13 +20,14 @@ function onLoadEvent()
 
   for (var i = 0; i < items.length; i++) {
     items[i].onmouseover = function haptic() {
-      vibrateFreq(0.1, 75);
+      vibrateFreq(0.075, 75);
       console.log("mouseover")
     }
   }
 
 }
 function mouseUp(event) {
+  clearTimeout(showWheel)
   var wheelSel = document.getElementById("wheel");
   wheelSel.style.display = 'none';
 
@@ -38,6 +40,7 @@ function mouseUp(event) {
   
 }
 function vibrateFreq(duration, freq) {
+
   var pattern = [];
   var halfCycle = (1 / freq) / 2;
   var cycles = Math.ceil(duration * freq)
@@ -48,7 +51,8 @@ function vibrateFreq(duration, freq) {
   navigator.vibrate(pattern);
 }
 function mouseDown(event) {
-  vibrateFreq(0.075, 20);
+  showWheel = setTimeout(function() {
+    vibrateFreq(0.075, 20);
     var wheelSel = document.getElementById("wheel");
     wheelSel.style.display = 'block';
     var x = event.pageX;
@@ -61,7 +65,9 @@ function mouseDown(event) {
     wheelSel.style.position = 'absolute';
     wheelSel.style.left = x - width/2 + 'px'
     wheelSel.style.top = y - height/2 + 'px'
-  }
+  }, 250)
+  
+}
 
 function updateEmoji(em){
   document.getElementById("update").innerHTML = em;
