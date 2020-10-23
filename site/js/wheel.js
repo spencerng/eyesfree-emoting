@@ -46,6 +46,7 @@ function vibrateFreq(duration, freq) {
   return pattern
 }
 function mouseDown(event) {
+  vibrateFreq(0.075, 20);
     var wheelSel = document.getElementById("wheel");
     wheelSel.style.display = 'block';
     var x = event.pageX;
