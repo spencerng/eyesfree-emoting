@@ -79,6 +79,17 @@
     <img src="../assets/trace_like.png" alt="trace" class="trace" hidden>
 
   </div>
+  
+  <!-- Buffer Page -->
+	<div class="buffer" style="display: none">
+		<h1>Thank you for taking our test for send Method A!</h1>
+		<h3><b>Before proceeding to Results</b>, please answer the following questions for Send Method A on the Google Form:</h3>
+		<li>How easy was this input method to learn and use?</li>
+		<li>How many emojis (out of 6) do you THINK you correctly input?</li>
+		<br>
+		<button class="btn btn-info" onclick="displayResults()">Proceed to Results >></button>
+	</div>
+  <!-- Result Page -->
   <div class="resultDiv" style="display: none">
 		<h1>Send Method A</h1>
 		<h4>Results:</h4>
@@ -205,7 +216,7 @@
 	  
 	  if(testIndex == 6){
 		//completeTest();
-		displayResults();
+		displayBuffer();
 	  	sendPulseSequence(300, 1);
 		//completeTest();
 		return;
@@ -255,7 +266,12 @@
       window.alert("By clicking OK, you confirm that you have learned this method of sending emoticons and are ready to use them in a study trial.")
     }
 	
+	function displayBuffer() {
+		document.getElementsByClassName('outer')[0].style.display = "none";
+		document.getElementsByClassName('buffer')[0].style.display = "block";
+	}
 	function displayResults() {
+		document.getElementsByClassName('buffer')[0].style.display = "none";
 		document.getElementsByClassName('outer')[0].style.display = "none";
 		document.getElementsByClassName('resultDiv')[0].style.display = "block";
 		
