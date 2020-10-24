@@ -145,10 +145,11 @@
       testIndex = (testIndex + 1);
 	  
 	  if(testIndex == 6){
+	  	sendPulseSequence(500, 1);
 		completeTest();
 		return;
 	  }
-	  sendPulseSequence(300, 1);
+	  sendPulseSequence(100, 1);
 	  var ind = locEmoticon(emojiTest[testIndex])
 
 	  var msg = new SpeechSynthesisUtterance();
