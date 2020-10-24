@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Send Demo 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://cdn.rawgit.com/bgrins/TinyColor/master/tinycolor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script>var exports = {};</script>
+  <script src="../js/qDollar.js"></script>
+  <script src="../js/shapeDetect.js"></script>
+</head>
+
+<body onload="onloading()" >
+  <div class="outer">
+    <!-- Emoticon -->
+    <div class="ellipse">
+      <img src="../assets/like.png" alt="emoji" class="emoji">
+    </div>
+
+    <div class="emoji_name">blah</div>
+	<div hidden class="testing">Hubba</div>
+	<div hidden id="results">No Results Yet</div>
+    <!-- <button class="top_left btn btn-success" onclick="goToTest()">Ready</button> -->
+
+    <h4 class="status" id="tocopy" hidden>no emoticon detected</h4>
+	<h4 class="testStatus" id="testCopy">no emoticon detected</h4>
+
+    <div style="margin: 1rem 0">
+      <button class="btn btn-success" onclick="goToTest()">Finish</button>
+      <button class="button_margin btn" onclick="onClickClearStrokes()">Clear</button>
+      <button class="btn btn-info" onclick="nextEmoticon()">Next >></button>
+    </div>
+    
+
+    <!-- Canvas -->
+    <canvas id="myCanvas"
+      onmousedown="mouseDownEvent(event.clientX, event.clientY, event.button)"
+      onmousemove="mouseMoveEvent(event.clientX, event.clientY, event.button)"
+      onmouseup="mouseUpEvent(event.clientX, event.clientY, event.button)" oncontextmenu="return false;">
+    </canvas>
+
+    <!-- Trace Image -->
+    <img src="../assets/trace_like.png" alt="trace" class="trace" hidden>
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script>
+	$(document).ready(function(){
+		myVar = setInterval("statusRefresh()", 10);
+	});
+  
+	function statusRefresh(){
+		var x = document.getElementById("tocopy").textContent;
+		var display = "";
+		if (x != "no emoticon detected"){
+			display = "emoticon detected";
+		}
+		else{
+			display = "no emoticon detected";
+		}
+		document.getElementById("testCopy").innerHTML = display; 
+	}
+  
+	var testIndex = 0;
+    var emoticonIndex = 0;
+    var emoticonsInfo = [];
+    var emoticons = ['yay', 'love', 'laugh', 'like', 'sad', 'angry'];
+	var emojiTest = [];
+	var testResults = [];
+	
+    for (var i = 0; i < 6; i++) {
+      emoticonsInfo.push({
+        trace: "../assets/trace_" + emoticons[i] + ".png",
+        emoji: "../assets/" + emoticons[i] + ".png"
+      })
+    }
+
+	var testCase = document.getElementsByClassName("testing")[0];
+    var traceReplace = document.getElementsByClassName("trace")[0];
+    var emojiReplace = document.getElementsByClassName("emoji")[0];
+    var nameText = document.getElementsByClassName("emoji_name")[0];
+	var results = document.getElementsByClassName("results")[0];
+	
+	function onloading(){
+		onLoadEvent();
+		getTests();
+		startTest();
+	}
+	
+	function startTest(){
+		nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
+		startEmote();
+	}
+	
+	function getTests(){
+		for (var i = 0; i < 10; i++){
+			var rand = Math.floor(Math.random() * 6);
+			emojiTest.push(emoticons[rand]);
+		}
+		testCase.innerHTML = emojiTest.toString();
+	}
+
+	function locEmoticon(emote){
+		for (var i = 0; i < 6; i++){
+			if (emoticons[i] == emote){
+				return i;
+			}
+		}
+		return -1;
+	}
+	
+	function startEmote(){
+      onClickClearStrokes();
+      testIndex = (testIndex) % 10;
+	  
+	  var ind = locEmoticon(emojiTest[testIndex])
+
+      traceReplace.src = emoticonsInfo[ind].trace;
+      emojiReplace.src = emoticonsInfo[ind].emoji;
+      nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
+	}
+	
+	function copyEmotion(){
+	  var x = document.getElementById("tocopy").textContent;
+	  document.getElementById("copy").innerHTML = x; 
+	}
+	
+    function nextEmoticon() {
+	  var x = document.getElementById("tocopy").textContent;
+	  testResults.push(x)
+	  document.getElementById("results").innerHTML = testResults;	
+	
+      onClickClearStrokes();
+      testIndex = (testIndex + 1);
+	  
+	  if(testIndex == 10){
+		completeTest();
+		return;
+	  }
+	  
+	  var ind = locEmoticon(emojiTest[testIndex])
+
+      traceReplace.src = emoticonsInfo[ind].trace;
+      emojiReplace.src = emoticonsInfo[ind].emoji;
+      nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex]; 
+    }
+	
+	function trimResults(){
+		trimmed = [];
+		for (var i = 0; i < 10; i++){
+			if (testResults[i] == "no emoticon detected"){
+				trimmed.push("no emoticon detected");
+			}
+			else{
+				trimmed.push(testResults[i].split(" ")[0]);
+			}
+		}
+		return trimmed;
+	}
+	
+	function calcAccuracy(){
+		var score = 0;
+		var results = trimResults()
+		for (var i = 0; i < 10; i++){
+			if (results[i] == emojiTest[i]){
+				score += 1;
+			}
+		}
+		score *= 10;
+		return score.toString() + "%";
+	}
+	
+	function completeTest(){
+		window.alert("Thank you for taking our test!\nYour Test Accuracy is: " + calcAccuracy());
+	}
+
+    function goToTest() {
+      window.alert("By clicking OK, you confirm that you have learned this method of sending emoticons and are ready to use them in a study trial.")
+    }
+  </script>
+</body>
+
+</html>
