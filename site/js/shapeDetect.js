@@ -89,9 +89,10 @@ function mouseDownEvent(x, y, button)
 }
 function mouseMoveEvent(x, y, button)
 {
-  clearTimeout(performAutodetect);
+
   if (_isDown)
   {
+    clearTimeout(performAutodetect);
     x -= _rc.x - getScrollX();
     y -= _rc.y - getScrollY();
     _points[_points.length] = new Point(x, y, _strokeID); // append
@@ -123,7 +124,7 @@ async function mouseUpEvent(x, y, button)
 
   performAutodetect = setTimeout(function() {
     detectEmoticon();
-  }, 1300)
+  }, 1000)
 
 }
 
