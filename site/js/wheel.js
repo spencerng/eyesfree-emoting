@@ -1,4 +1,5 @@
 var lastTouched = undefined;
+
 var emojis = ["yay", "sad", "angry", "laugh", "love", "like"]
 var showWheel;
 
@@ -39,7 +40,7 @@ function onLoadEvent()
 
   for (var i = 0; i < items.length; i++) {
     items[i].onmouseover = function haptic() {
-      vibrateFreq(0.04, 75);
+      vibrateFreq(0.02, 75);
       console.log("mouseover")
     }
   }

@@ -84,6 +84,7 @@ canvas {
 
 html, body {
   height: 85%;
+  overscroll-behavior-y: contain;
 }
 
 .ellipse {
@@ -105,12 +106,10 @@ html, body {
   font-size: 1rem;
   border: 0.2em solid rgba(64, 64, 64, 0.4);
   border-radius: 100%;
-  width: 21em;
-  height: 21em;
+  width: 25em;
+  height: 25em;
   position: absolute;
   background-color: rgba(220, 220, 220, 0.5);
-  
-  
   
   flex-direction: column;
   justify-content: center;
@@ -130,30 +129,36 @@ html, body {
   user-select: none;
   position: absolute;
   display: block;
+  
+}
+
+.item > input {
+  height: 7.5em;
+  width: 7.5em;
 }
 
 .item-1 {
-  transform: rotate(0.083333333turn) translate(-7em) rotate(-0.083333333turn);
+  transform: rotate(0.083333333turn) translate(-8em) rotate(-0.083333333turn);
 }
 
 .item-2 {
-  transform: rotate(0.25turn) translate(-7em) rotate(-0.25turn);
+  transform: rotate(0.25turn) translate(-8em) rotate(-0.25turn);
 }
 
 .item-3 {
-  transform: rotate(0.416666turn) translate(-7em) rotate(-0.416666turn);
+  transform: rotate(0.416666turn) translate(-8em) rotate(-0.416666turn);
 }
 
 .item-4 {
-  transform: rotate(0.583333turn) translate(-7em) rotate(-0.583333turn);
+  transform: rotate(0.583333turn) translate(-8em) rotate(-0.583333turn);
 }
 
 .item-5 {
-  transform: rotate(0.75turn) translate(-7em) rotate(-0.75turn);
+  transform: rotate(0.75turn) translate(-8em) rotate(-0.75turn);
 }
 
 .item-6 {
-  transform: rotate(0.9166666turn) translate(-7em) rotate(-0.9166666turn);
+  transform: rotate(0.9166666turn) translate(-8em) rotate(-0.9166666turn);
 }
 
 .no-scroll {
