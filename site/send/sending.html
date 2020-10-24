@@ -31,9 +31,9 @@
 	<h4 class="testStatus" id="testCopy">no emoticon detected</h4>
 
     <div style="margin: 1rem 0">
-      <button class="btn btn-success" onclick="goToTest()">Finish</button>
-      <button class="button_margin btn" onclick="onClickClearStrokes()">Clear</button>
-      <button class="btn btn-info" onclick="nextEmoticon()">Next >></button>
+      <button hidden class="btn btn-success" onclick="goToTest()">Finish</button>
+      <button hidden class="button_margin btn" onclick="onClickClearStrokes()">Clear</button>
+      <button hidden class="btn btn-info" onclick="nextEmoticon()">Next >></button>
     </div>
     
 
@@ -56,8 +56,15 @@
     crossorigin="anonymous"></script>
   <script>
 	$(document).ready(function(){
-		myVar = setInterval("statusRefresh()", 10);
+		myVar = setInterval("statusRefresh2()", 10);
 	});
+	
+	function statusRefresh2(){
+		var x = document.getElementById("tocopy").textContent;
+		if (x != "no emoticon detected"){
+			nextEmoticon();
+		}
+	}
   
 	function statusRefresh(){
 		var x = document.getElementById("tocopy").textContent;
