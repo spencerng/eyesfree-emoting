@@ -24,6 +24,7 @@ body {
 
 .bold_info {
   font-weight: 600;
+  margin: 1.75rem 0;
 }
 
 .card {
