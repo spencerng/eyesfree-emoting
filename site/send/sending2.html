@@ -129,6 +129,10 @@
       emojiReplace.src = emoticonsInfo[ind].emoji;
       nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
 
+      var msg = new SpeechSynthesisUtterance();
+		msg.text = emojiTest[testIndex];
+		window.speechSynthesis.speak(msg);
+      
 		
 	}
 	
@@ -152,9 +156,7 @@
 	  sendPulseSequence(100, 1);
 	  var ind = locEmoticon(emojiTest[testIndex])
 
-	  var msg = new SpeechSynthesisUtterance();
-	msg.text = emojiTest[testIndex];
-	window.speechSynthesis.speak(msg);      
+     
       traceReplace.src = emoticonsInfo[ind].trace;
       emojiReplace.src = emoticonsInfo[ind].emoji;
       nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex]; 
