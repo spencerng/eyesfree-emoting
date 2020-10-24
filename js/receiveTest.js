@@ -29,7 +29,8 @@ function onLoad() {
 			results.push(emoji)
 
 			if (trialNum == 11) {
-				displayResults();
+				//displayResults();
+				displayBuffer();
 			} else {
 				trialNum += 1;
 				beginTrial();
@@ -52,7 +53,13 @@ function onLoad() {
 	}
 }
 
+function displayBuffer(){
+	document.getElementById("nonResultDiv").hidden = true;
+	document.getElementsByClassName('buffer')[0].style.display = "block";
+}
+
 function displayResults() {
+	document.getElementsByClassName('buffer')[0].style.display = "none";
 	document.getElementById("nonResultDiv").hidden = true;
 	document.getElementById("resultDiv").hidden = false;
 
