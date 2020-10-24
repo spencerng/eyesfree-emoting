@@ -123,6 +123,14 @@ html, body {
   overscroll-behavior-y: contain;
 }
 
+#testDisplay {
+  display: none;
+}
+
+#demoDisplay {
+  display: none;
+}
+
 /* Scroll wheel styling */
 
 
