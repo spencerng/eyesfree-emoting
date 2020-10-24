@@ -110,6 +110,12 @@
   <script>
   var msg, testIndex, emoticonIndex, emoticonsInfo, emojiTest, testResults, testCase, emojiReplace, nameText, results;
   function displayTest() {
+    var info = document.getElementById("testInfo");
+    var test = document.getElementById("testDisplay");
+    info.style.display = "none";
+    test.style.display = "block";
+
+    
     onLoadEvent();
     testIndex = 0;
     emoticonIndex = 0;
@@ -134,10 +140,7 @@
   	msg = new SpeechSynthesisUtterance();
     msg.text = emojiTest[testIndex];
     window.speechSynthesis.speak(msg);
-    var info = document.getElementById("testInfo");
-    var test = document.getElementById("testDisplay");
-    info.style.display = "none";
-    test.style.display = "block";
+    
 
     startTest();
   }
