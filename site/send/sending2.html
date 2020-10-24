@@ -93,7 +93,8 @@
   var msg;
   function displayTest() {
   	msg = new SpeechSynthesisUtterance();
-  	msg.text = emojiTest[testIndex];
+    msg.text = emojiTest[testIndex];
+    window.speechSynthesis.speak(msg);
     var info = document.getElementById("testInfo");
     var test = document.getElementById("testDisplay");
     info.style.display = "none";
@@ -155,14 +156,16 @@
 	function startEmote(){
       testIndex = (testIndex) % 6;
 	  
-	  var ind = locEmoticon(emojiTest[testIndex])
+    var ind = locEmoticon(emojiTest[testIndex])
+    
+
+    console.log("Next emoji: ", emoticonsInfo[ind].emoji);
 
       traceReplace.src = emoticonsInfo[ind].trace;
       emojiReplace.src = emoticonsInfo[ind].emoji;
       nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
 
       msg.text = emojiTest[testIndex];
-		  window.speechSynthesis.speak(msg);
       
 		
 	}
@@ -191,6 +194,9 @@
       traceReplace.src = emoticonsInfo[ind].trace;
       emojiReplace.src = emoticonsInfo[ind].emoji;
       nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex]; 
+
+      msg.text = emojiTest[testIndex];
+		window.speechSynthesis.speak(msg);
     }
 	
 	function trimResults(){
