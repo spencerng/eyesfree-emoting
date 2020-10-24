@@ -27,7 +27,7 @@
     <img src="../assets/test_icon.png" style="margin: 2rem 0 1rem; height: 60px;">
     <div class="heading">
       <h3 class="blue_heading">Sending Trial</h3>
-      <h5 style="color: #707070"> Method 2: Scroll Wheel </h5>
+      <h5 style="color: #707070"> Method 2: Touch Wheel </h5>
     </div>
 
     <div class="bold_info">You will be given 6 emoticons to send without looking at your screen.</div>
@@ -46,7 +46,7 @@
     </div>
  </div>
 
-  <div class="outer" id="testDisplay">
+  <div  id="testDisplay">
     <!-- Emoticon -->
     <div class="ellipse">
       <img src="../assets/like.png" alt="emoji" class="emoji">
@@ -90,8 +90,29 @@
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
   <script>
-  var msg;
+  var msg, testIndex, emoticonIndex, emoticonsInfo, emojiTest, testResults, testCase, emojiReplace, nameText, results;
   function displayTest() {
+    onLoadEvent();
+    testIndex = 0;
+    emoticonIndex = 0;
+    emoticonsInfo = [];
+    emoticons = ['yay', 'love', 'laugh', 'like', 'sad', 'angry'];
+    emojiTest = ['laugh','sad','love','yay','angry','like'];
+    testResults = [];
+    
+    for (var i = 0; i < 6; i++) {
+      emoticonsInfo.push({
+        trace: "../assets/trace_" + emoticons[i] + ".png",
+        emoji: "../assets/" + emoticons[i] + ".png"
+      })
+    }
+
+    testCase = document.getElementsByClassName("testing")[0];
+    
+    emojiReplace = document.getElementsByClassName("emoji")[0];
+    nameText = document.getElementsByClassName("emoji_name")[0];
+    console.log(nameText)
+    results = document.getElementsByClassName("results")[0];
   	msg = new SpeechSynthesisUtterance();
     msg.text = emojiTest[testIndex];
     window.speechSynthesis.speak(msg);
@@ -99,7 +120,7 @@
     var test = document.getElementById("testDisplay");
     info.style.display = "none";
     test.style.display = "block";
-    onLoadEvent();
+
     startTest();
   }
 
@@ -116,31 +137,12 @@
 			document.getElementById("update").innerHTML = "None";
 		}
 	}
-  
 
-  
-	var testIndex = 0;
-    var emoticonIndex = 0;
-    var emoticonsInfo = [];
-    var emoticons = ['yay', 'love', 'laugh', 'like', 'sad', 'angry'];
-	var emojiTest = ['laugh','sad','love','yay','angry','like'];
-	var testResults = [];
-	
-    for (var i = 0; i < 6; i++) {
-      emoticonsInfo.push({
-        trace: "../assets/trace_" + emoticons[i] + ".png",
-        emoji: "../assets/" + emoticons[i] + ".png"
-      })
-    }
-
-	var testCase = document.getElementsByClassName("testing")[0];
-    var traceReplace = document.getElementsByClassName("trace")[0];
-    var emojiReplace = document.getElementsByClassName("emoji")[0];
-    var nameText = document.getElementsByClassName("emoji_name")[0];
-	var results = document.getElementsByClassName("results")[0];
 	
 	function startTest(){
+
 		nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
+        console.log(nameText.innerHTML)
 		startEmote();
 	}
 
@@ -161,7 +163,7 @@
 
     console.log("Next emoji: ", emoticonsInfo[ind].emoji);
 
-      traceReplace.src = emoticonsInfo[ind].trace;
+      
       emojiReplace.src = emoticonsInfo[ind].emoji;
       nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
 
@@ -191,7 +193,7 @@
 	  var ind = locEmoticon(emojiTest[testIndex])
 
      
-      traceReplace.src = emoticonsInfo[ind].trace;
+      
       emojiReplace.src = emoticonsInfo[ind].emoji;
       nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex]; 
 
