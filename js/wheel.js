@@ -25,11 +25,6 @@ function onLoadEvent()
   document.onmousedown = mouseDown
   document.onmouseup = mouseUp
 
-  $(document).ready(function(){
-
-     $('.notSelectable').disableSelection();
-
-  });
 
   canvas.addEventListener("touchstart", touchStartEvent, false);
   canvas.addEventListener("touchmove", touchMoveEvent, false);
@@ -39,17 +34,17 @@ function onLoadEvent()
   
 
   var wheel = document.getElementById("wheel")
-  wheel.style.height = dpi * 3 + "px"
-  wheel.style.width = dpi * 3 + "px"
+  wheel.style.height = dpi * 2 + "px"
+  wheel.style.width = dpi * 2 + "px"
 
   let items = document.getElementsByClassName("item")
 
 
   for (var i = 0; i < items.length; i++) {
-    items[i].childNodes[0].style.height = dpi * 0.7 + "px"
-    items[i].childNodes[0].style.width = dpi * 0.7 + "px"
+    items[i].childNodes[0].style.height = dpi * 0.4666 + "px"
+    items[i].childNodes[0].style.width = dpi * 0.4666 + "px"
     items[i].style.transform = "rotate(" + (1/12 + 1/6 * i) + "turn) "
-    items[i].style.transform += "translate(" + (-dpi * 1.03) + "px) "
+    items[i].style.transform += "translate(" + (-dpi * 0.68666) + "px) "
     items[i].style.transform += "rotate(-" + (1/12 + 1/6 * i) + "turn) "
 
     items[i].onmouseover = function haptic() {

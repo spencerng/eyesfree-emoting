@@ -12,8 +12,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <script>var exports = {};</script>
   <script src="../js/pDollar.js"></script>
-  <script src="../js/wheel.js"></script> 
   <script src="../js/vibrate.js"></script>
+  <script src="../js/wheel.js"></script> 
   <style>
     #testDisplay {
       display: none;
@@ -27,7 +27,7 @@
     <img src="../assets/test_icon.png" style="margin: 2rem 0 1rem; height: 60px;">
     <div class="heading">
       <h3 class="blue_heading">Sending Trial</h3>
-      <h5 style="color: #707070"> Method 2: Touch Wheel </h5>
+      <h5 style="color: #707070"> Method B: Touch Wheel </h5>
     </div>
 
     <div class="bold_info">You will be given 6 emoticons to send without looking at your screen.</div>
@@ -84,13 +84,25 @@
 
     <!-- Trace Image -->
     <img src="../assets/trace_like.png" alt="trace" class="trace" hidden>
-
+	
+	<!-- Buffer Page -->
+	<div class="buffer" style="display: none">
+		<h1>Thank you for taking our test!</h1>
+		<h3><b>Before proceeding to Results</b>, please answer the following questions for <b>Send Method B</b> on the Google Form:</h3>
+		<li>How easy was this input method to learn and use?</li>
+		<li>How many emojis (out of 6) do you THINK you correctly input?</li>
+		<br>
+		<button class="btn btn-info" onclick="displayResults()">I filled out Google Form >></button>
+	</div>
+	
   </div>
   <div class="resultDiv" style="display: none">
 		<h1>Send Method B</h1>
 		<h4>Results:</h4>
+
 		<div id="resultsList">
 		</div>
+    
 		<h4>Accuracy: <div id="accuracy">6/12</div></h4>
 	</div>
   
@@ -100,6 +112,12 @@
   <script>
   var msg, testIndex, emoticonIndex, emoticonsInfo, emojiTest, testResults, testCase, emojiReplace, nameText, results;
   function displayTest() {
+    var info = document.getElementById("testInfo");
+    var test = document.getElementById("testDisplay");
+    info.style.display = "none";
+    test.style.display = "block";
+
+
     onLoadEvent();
     testIndex = 0;
     emoticonIndex = 0;
@@ -124,10 +142,7 @@
   	msg = new SpeechSynthesisUtterance();
     msg.text = emojiTest[testIndex];
     window.speechSynthesis.speak(msg);
-    var info = document.getElementById("testInfo");
-    var test = document.getElementById("testDisplay");
-    info.style.display = "none";
-    test.style.display = "block";
+    
 
     startTest();
   }
@@ -192,9 +207,9 @@
       testIndex = (testIndex + 1);
 	  
 	  if(testIndex == 6){
-	  	sendPulseSequence(500, 1);
+	  	sendPulseSequence(800, 1);
 		//completeTest();
-		displayResults();
+		displayBuffer();
 		return;
 	  }
 	  sendPulseSequence(100, 1);
@@ -241,7 +256,13 @@
       window.alert("By clicking OK, you confirm that you have learned this method of sending emoticons and are ready to use them in a study trial.")
     }
 	
+	function displayBuffer() {
+		document.getElementsByClassName('outer')[0].style.display = "none";
+		document.getElementsByClassName('buffer')[0].style.display = "block";
+	}
+	
 	function displayResults() {
+		document.getElementsByClassName('buffer')[0].style.display = "none";
 		document.getElementsByClassName('outer')[0].style.display = "none";
 		document.getElementsByClassName('resultDiv')[0].style.display = "block";
 		
