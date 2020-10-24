@@ -1,17 +1,102 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Send Demo 2</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="../style.css">
-</head>
-<body>
-  <div class="container">
-    hi
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<head>
+  <title>Send Demo 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="../style.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://cdn.rawgit.com/bgrins/TinyColor/master/tinycolor.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+  <script>var exports = {};</script>
+  <script src="../js/pDollar.js"></script>
+  <script src="../js/wheel.js"></script> 
+</head>
+
+<body onload="onLoadEvent()">
+  <div class="outer">
+    <!-- Emoticon -->
+    <div class="ellipse">
+      <img src="../assets/like.png" alt="emoji" class="emoji">
+    </div>
+
+    <div class="emoji_name">1. Like</div>
+
+    <!-- <button class="top_left btn btn-success" onclick="goToTest()">Ready</button> -->
+
+    <h4 class="notSelectable">Emoji Selected: <p id="update">None</p></h4>
+
+    <div style="margin: 1rem 0">
+      <button class="btn btn-success" onclick="goToTest()">Finish</button>
+      <button hidden class="button_margin btn" onclick="onClickClearStrokes()">Clear</button>
+      <button class="btn btn-info" onclick="prevEmoticon()"><< Prev</button>
+      <button class="btn btn-info" onclick="nextEmoticon()">Next >></button>
+    </div>
+    
+
+    <!-- Canvas -->
+  	
+      <div id = "wheel" class="dial-wrapper" style="display:none;" >
+        <div class="dial-items">
+          <span class="item item-1"><input id="yay" type="image" src="../assets/yay.png" alt="Submit"></span>
+          <span class="item item-2"><input id="love" type="image" src="../assets/love.png" alt="Submit"></span>
+          <span class="item item-3"><input id="laugh" type="image" src="../assets/laugh.png" alt="Submit"></span>
+          <span class="item item-4"><input id="angry" type="image" src="../assets/angry.png" alt="Submit"></span>
+          <span class="item item-5"><input id="like" type="image" src="../assets/like.png" alt="Submit"></span>
+          <span class="item item-6"><input id="sad" type="image" src="../assets/sad.png" alt="Submit"></span>
+  		
+        </div>
+      </div>
+  	<canvas id="myCanvas"></canvas>
+
+    <!-- Trace Image -->
+    <img hidden src="../assets/trace_like.png" alt="trace" class="trace">
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script>
+    var emoticonIndex = 0;
+    var emoticonsInfo = [];
+    var emoticons = ['yay', 'love', 'laugh', 'like', 'sad', 'angry'];
+    for (var i = 0; i < 6; i++) {
+      emoticonsInfo.push({
+        trace: "../assets/trace_" + emoticons[i] + ".png",
+        emoji: "../assets/" + emoticons[i] + ".png"
+      })
+    }
+
+    var traceReplace = document.getElementsByClassName("trace")[0];
+    var emojiReplace = document.getElementsByClassName("emoji")[0];
+    var nameText = document.getElementsByClassName("emoji_name")[0];
+
+    function nextEmoticon() {
+	  document.getElementById("update").innerHTML = "None";
+      emoticonIndex = (emoticonIndex + 1) % 6;
+
+      traceReplace.src = emoticonsInfo[emoticonIndex].trace;
+      emojiReplace.src = emoticonsInfo[emoticonIndex].emoji;
+      nameText.innerHTML = (emoticonIndex + 1) + '. ' + emoticons[emoticonIndex];
+    }
+
+    function prevEmoticon() {
+      emoticonIndex = (emoticonIndex + 5) % 6;
+
+      traceReplace.src = emoticonsInfo[emoticonIndex].trace;
+      emojiReplace.src = emoticonsInfo[emoticonIndex].emoji;
+      nameText.innerHTML = (emoticonIndex + 1) + '. ' + emoticons[emoticonIndex];
+    }
+
+    function goToTest() {
+      window.alert("By clicking OK, you confirm that you have learned this method of sending emoticons and are ready to use them in a study trial.")
+    }
+  </script>
 </body>
+
 </html>
