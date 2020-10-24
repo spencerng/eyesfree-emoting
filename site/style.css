@@ -163,29 +163,6 @@ html, body {
   width: 7.75em;
 }
 
-.item-1 {
-  transform: rotate(0.083333333turn) translate(-11.5em) rotate(-0.083333333turn);
-}
-
-.item-2 {
-  transform: rotate(0.25turn) translate(-11.5em) rotate(-0.25turn);
-}
-
-.item-3 {
-  transform: rotate(0.416666turn) translate(-11.5em) rotate(-0.416666turn);
-}
-
-.item-4 {
-  transform: rotate(0.583333turn) translate(-11.5em) rotate(-0.583333turn);
-}
-
-.item-5 {
-  transform: rotate(0.75turn) translate(-11.5em) rotate(-0.75turn);
-}
-
-.item-6 {
-  transform: rotate(0.9166666turn) translate(-11.5em) rotate(-0.9166666turn);
-}
 
 .no-scroll {
   overscroll-behavior: none;

@@ -19,6 +19,7 @@ $.fn.extend({
 
 function onLoadEvent()
 {
+  var dpi = getDPI();
   var canvas = document.getElementById('myCanvas');
   
   document.onmousedown = mouseDown
@@ -36,14 +37,28 @@ function onLoadEvent()
   canvas.width = document.body.scrollWidth * 0.9
   canvas.height = document.body.scrollHeight * 0.75
   
+
+  var wheel = document.getElementById("wheel")
+  wheel.style.height = dpi * 3 + "px"
+  wheel.style.width = dpi * 3 + "px"
+
   let items = document.getElementsByClassName("item")
 
+
   for (var i = 0; i < items.length; i++) {
+    items[i].childNodes[0].style.height = dpi * 0.7 + "px"
+    items[i].childNodes[0].style.width = dpi * 0.7 + "px"
+    items[i].style.transform = "rotate(" + (1/12 + 1/6 * i) + "turn) "
+    items[i].style.transform += "translate(" + (-dpi * 1.03) + "px) "
+    items[i].style.transform += "rotate(-" + (1/12 + 1/6 * i) + "turn) "
+
     items[i].onmouseover = function haptic() {
       vibrateFreq(0.02, 75);
       console.log("mouseover")
     }
   }
+
+  
 
 }
 function mouseUp(event) {
@@ -57,6 +72,7 @@ function mouseUp(event) {
   } else if (emojis.includes(event.target.id)) {
     updateEmoji(event.target.id);  
   }
+
   
 }
 function vibrateFreq(duration, freq) {
@@ -87,6 +103,16 @@ function mouseDown(event) {
     wheelSel.style.top = y - height/2 + 'px'
   }, 250)
   
+}
+
+function getDPI() {
+  document.body.innerHTML = "<div id=\"dpi\" style=\"height: 1in; width: 1in; left: 100%; position: fixed; top: 100%;\"></div>" + document.body.innerHTML
+  var dpi_x = document.getElementById('dpi').offsetWidth;
+  var dpi_y = document.getElementById('dpi').offsetHeight;
+  var width = screen.width / dpi_x;
+  var height = screen.height / dpi_y;
+  console.log(dpi_x, dpi_y)
+  return dpi_x
 }
 
 function updateEmoji(em){
