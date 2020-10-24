@@ -25,11 +25,6 @@ function onLoadEvent()
   document.onmousedown = mouseDown
   document.onmouseup = mouseUp
 
-  $(document).ready(function(){
-
-     $('.notSelectable').disableSelection();
-
-  });
 
   canvas.addEventListener("touchstart", touchStartEvent, false);
   canvas.addEventListener("touchmove", touchMoveEvent, false);
