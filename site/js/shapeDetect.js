@@ -8,7 +8,7 @@ function onLoadEvent()
 {
   _points = new Array(); // point array for current stroke
   _strokeID = 0;
-  _r = new PDollarPlusRecognizer();
+  _r = new DollarRecognizer();
 
   var canvas = document.getElementById('myCanvas');
   canvas.width = document.body.scrollWidth * 0.9
@@ -104,7 +104,6 @@ function printPoints() {
   for (var i = 0; i < _points.length; i++) {
     pointStr += "new Point(" + _points[i].X
     pointStr += "," + _points[i].Y
-    pointStr += "," + _points[i].ID
     pointStr += "),"
   }
   pointStr = pointStr.slice(0, -1) + ")"
