@@ -27,7 +27,7 @@
     <img src="../assets/test_icon.png" style="margin: 2rem 0 1rem; height: 60px;">
     <div class="heading">
       <h3 class="blue_heading">Sending Trial</h3>
-      <h5 style="color: #707070"> Method 1: Shape Tracing </h5>
+      <h5 style="color: #707070"> Method A: Shape Tracing </h5>
     </div>
 
     <div class="bold_info">You will be given 6 emoticons to send without looking at your screen.</div>
@@ -82,12 +82,12 @@
   
   <!-- Buffer Page -->
 	<div class="buffer" style="display: none">
-		<h1>Thank you for taking our test for send Method A!</h1>
-		<h3><b>Before proceeding to Results</b>, please answer the following questions for Send Method A on the Google Form:</h3>
+		<h1>Thank you for taking our test!</h1>
+		<h3><b>Before proceeding to Results</b>, please answer the following questions for <b>Send Method A</b> on the Google Form:</h3>
 		<li>How easy was this input method to learn and use?</li>
 		<li>How many emojis (out of 6) do you THINK you correctly input?</li>
 		<br>
-		<button class="btn btn-info" onclick="displayResults()">Proceed to Results >></button>
+		<button class="btn btn-info" onclick="displayResults()">I filled out Google Form >></button>
 	</div>
   <!-- Result Page -->
   <div class="resultDiv" style="display: none">
@@ -217,7 +217,7 @@
 	  if(testIndex == 6){
 		//completeTest();
 		displayBuffer();
-	  	sendPulseSequence(300, 1);
+	  	sendPulseSequence(800, 1);
 		//completeTest();
 		return;
 	  }

@@ -32,8 +32,18 @@
 		<img src="../assets/angry.png" class="test">
 		<br>
 		<h3 class="receiveLearn status">no emoticon selected</h3>
-		<button class="receiveLearn" id="nextButton">Next</button>
+		<button class="receiveLearn" id="nextButton" disabled>Next</button>
 	</div>
+	<!-- Buffer Page -->
+	<div class="buffer" style="display: none">
+		<h1>Thank you for taking our test!</h1>
+		<h3><b>Before proceeding to Results</b>, please answer the following questions for <b>Receive Method A</b> on the Google Form:</h3>
+		<li>How easy was this input method to learn and use?</li>
+		<li>How many emojis (out of 6) do you THINK you correctly input?</li>
+		<br>
+		<button class="btn btn-info" onclick="displayResults()">I filled out Google Form >></button>
+	</div>
+	
 	<div id="resultDiv" hidden>
 		<h4>Results:</h4>
 		<div id="resultsList">
