@@ -106,8 +106,8 @@ html, body {
   font-size: 1rem;
   border: 0.2em solid rgba(64, 64, 64, 0.4);
   border-radius: 100%;
-  width: 25em;
-  height: 25em;
+  width: 30em;
+  height: 30em;
   position: absolute;
   background-color: rgba(220, 220, 220, 0.5);
   
@@ -138,27 +138,27 @@ html, body {
 }
 
 .item-1 {
-  transform: rotate(0.083333333turn) translate(-8em) rotate(-0.083333333turn);
+  transform: rotate(0.083333333turn) translate(-10em) rotate(-0.083333333turn);
 }
 
 .item-2 {
-  transform: rotate(0.25turn) translate(-8em) rotate(-0.25turn);
+  transform: rotate(0.25turn) translate(-10em) rotate(-0.25turn);
 }
 
 .item-3 {
-  transform: rotate(0.416666turn) translate(-8em) rotate(-0.416666turn);
+  transform: rotate(0.416666turn) translate(-10em) rotate(-0.416666turn);
 }
 
 .item-4 {
-  transform: rotate(0.583333turn) translate(-8em) rotate(-0.583333turn);
+  transform: rotate(0.583333turn) translate(-10em) rotate(-0.583333turn);
 }
 
 .item-5 {
-  transform: rotate(0.75turn) translate(-8em) rotate(-0.75turn);
+  transform: rotate(0.75turn) translate(-10em) rotate(-0.75turn);
 }
 
 .item-6 {
-  transform: rotate(0.9166666turn) translate(-8em) rotate(-0.9166666turn);
+  transform: rotate(0.9166666turn) translate(-10em) rotate(-0.9166666turn);
 }
 
 .no-scroll {
