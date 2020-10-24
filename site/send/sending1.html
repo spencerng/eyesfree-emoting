@@ -151,14 +151,10 @@
     var nameText = document.getElementsByClassName("emoji_name")[0];
 	var results = document.getElementsByClassName("results")[0];
 	
-<<<<<<< HEAD
 	function onloading(){
 		onLoadEvent();
 		startTest();
 	}
-=======
-
->>>>>>> a9d81d9c2c98d2cd0d309a09096a27db3b64ca90
 	
 	function startTest(){
 		nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
@@ -208,13 +204,10 @@
       testIndex = (testIndex + 1);
 	  
 	  if(testIndex == 6){
-<<<<<<< HEAD
 		//completeTest();
 		displayResults();
-=======
 	  	sendPulseSequence(300, 1);
 		completeTest();
->>>>>>> a9d81d9c2c98d2cd0d309a09096a27db3b64ca90
 		return;
 	  }
 
