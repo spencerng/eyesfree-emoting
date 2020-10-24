@@ -3,24 +3,50 @@ body {
   font-family: 'Avenir Next';
 }
 
+.round_btn {
+  border-radius: 30px;
+}
+
+.blue_btn {
+  background-color: #3A4D8D;
+  color: white;
+  font-weight: 600;
+  font-size: 25px;
+  border-radius: 2rem;
+  padding: 0.75rem 2rem;
+}
+
+
+.blue_heading {
+  color: #3A4D8D;
+  font-weight: 600;
+}
+
+.bold_info {
+  font-weight: 600;
+}
 
 .card {
   margin: 0 auto;
   width: 80%;
 }
 
+.container {
+  text-align: center;
+}
+
 .ellipse {
   margin: 0 auto;
-  height: 18vh;
-  width: 18vh;
+  height: 16vh;
+  width: 16vh;
   background-color: #45597e;
   border-radius: 50%;
   margin-bottom: 2vh;
 }
 
 .emoji {
-  height: 13vh;
-  margin-top: 3.25vh;
+  height: 12vh;
+  margin-top: 2vh;
 }
 
 .emoji_name {
@@ -34,6 +60,14 @@ body {
 
 .heading {
   margin-bottom: 1rem;
+}
+
+.instruction_list {
+  padding-left: 1rem;
+}
+
+.instruction_list li {
+  margin-top: 1rem;
 }
 
 .large_prompt {
@@ -83,19 +117,9 @@ canvas {
 }
 
 html, body {
-  height: 85%;
+  height: 75vh;
   overscroll-behavior-y: contain;
 }
-
-.ellipse {
-    margin: 0 auto;
-    height: 20vh;
-    width: 20vh;
-    background-color: #45597e;
-    border-radius: 50%;
-    margin-bottom: 5vh;
-}
-
 
 /* Scroll wheel styling */
 
