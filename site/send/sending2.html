@@ -12,7 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <script>var exports = {};</script>
   <script src="../js/pDollar.js"></script>
-  <script src="../js/shapeDetect.js"></script>
+  <script src="../js/wheel.js"></script> 
 </head>
 
 <body onload="onloading()" >
@@ -27,9 +27,6 @@
 	<div hidden id="results">No Results Yet</div>
     <!-- <button class="top_left btn btn-success" onclick="goToTest()">Ready</button> -->
 
-    <h4 class="status" id="tocopy" hidden>no emoticon detected</h4>
-	<h4 class="testStatus" id="testCopy">no emoticon detected</h4>
-
     <div style="margin: 1rem 0">
       <button hidden class="btn btn-success" onclick="goToTest()">Finish</button>
       <button hidden class="button_margin btn" onclick="onClickClearStrokes()">Clear</button>
@@ -38,11 +35,22 @@
     
 
     <!-- Canvas -->
-    <canvas id="myCanvas"
-      onmousedown="mouseDownEvent(event.clientX, event.clientY, event.button)"
-      onmousemove="mouseMoveEvent(event.clientX, event.clientY, event.button)"
-      onmouseup="mouseUpEvent(event.clientX, event.clientY, event.button)" oncontextmenu="return false;">
-    </canvas>
+	<h2 hidden class="notSelectable">Emoji Selected: <p id="update">None</p></h2>
+	<h4 hidden class="testStatus" id="testCopy">no emoticon detected</h4>
+  	
+      <div id = "wheel" class="dial-wrapper" style="display:none;" >
+        <div class="dial-items">
+          <span class="item item-1"><input id="yay" type="image" src="../assets/yay.png" alt="Submit"></span>
+          <span class="item item-2"><input id="love" type="image" src="../assets/love.png" alt="Submit"></span>
+          <span class="item item-3"><input id="laugh" type="image" src="../assets/laugh.png" alt="Submit"></span>
+          <span class="item item-4"><input id="angry" type="image" src="../assets/angry.png" alt="Submit"></span>
+          <span class="item item-5"><input id="like" type="image" src="../assets/like.png" alt="Submit"></span>
+          <span class="item item-6"><input id="sad" type="image" src="../assets/sad.png" alt="Submit"></span>
+  		
+        </div>
+      </div>
+  	<canvas  id="myCanvas"></canvas>
+  </div>
 
     <!-- Trace Image -->
     <img src="../assets/trace_like.png" alt="trace" class="trace" hidden>
@@ -60,23 +68,16 @@
 	});
 	
 	function statusRefresh2(){
-		var x = document.getElementById("tocopy").textContent;
-		if (x != "no emoticon detected"){
+		var x = document.getElementById("update").textContent;
+		document.getElementById("testCopy").innerHTML = x;
+		if (x != "None"){
+			
 			nextEmoticon();
+			document.getElementById("update").innerHTML = "None";
 		}
 	}
   
-	function statusRefresh(){
-		var x = document.getElementById("tocopy").textContent;
-		var display = "";
-		if (x != "no emoticon detected"){
-			display = "emoticon detected";
-		}
-		else{
-			display = "no emoticon detected";
-		}
-		document.getElementById("testCopy").innerHTML = display; 
-	}
+
   
 	var testIndex = 0;
     var emoticonIndex = 0;
@@ -108,14 +109,6 @@
 		nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
 		startEmote();
 	}
-	
-	function getTests(){
-		for (var i = 0; i < 6; i++){
-			var rand = Math.floor(Math.random() * 6);
-			emojiTest.push(emoticons[rand]);
-		}
-		testCase.innerHTML = emojiTest.toString();
-	}
 
 	function locEmoticon(emote){
 		for (var i = 0; i < 6; i++){
@@ -127,7 +120,6 @@
 	}
 	
 	function startEmote(){
-      onClickClearStrokes();
       testIndex = (testIndex) % 6;
 	  
 	  var ind = locEmoticon(emojiTest[testIndex])
@@ -143,11 +135,10 @@
 	}
 	
     function nextEmoticon() {
-	  var x = document.getElementById("tocopy").textContent;
+	  var x = document.getElementById("update").textContent;
 	  testResults.push(x)
-	  document.getElementById("results").innerHTML = testResults;	
+	  //document.getElementById("results").innerHTML = testResults;	
 	
-      onClickClearStrokes();
       testIndex = (testIndex + 1);
 	  
 	  if(testIndex == 6){
