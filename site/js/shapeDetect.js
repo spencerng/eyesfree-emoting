@@ -8,7 +8,7 @@ function onLoadEvent()
 {
   _points = new Array(); // point array for current stroke
   _strokeID = 0;
-  _r = new DollarRecognizer();
+  _r = new PDollarRecognizer();
 
   var canvas = document.getElementById('myCanvas');
   canvas.width = document.body.scrollWidth * 0.9
