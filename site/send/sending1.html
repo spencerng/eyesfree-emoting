@@ -13,6 +13,7 @@
   <script>var exports = {};</script>
   <script src="../js/pDollar.js"></script>
   <script src="../js/shapeDetect.js"></script>
+  <script src="../js/vibrate.js"></script>
 </head>
 
 <body onload="onloading()" >
@@ -135,6 +136,9 @@
       traceReplace.src = emoticonsInfo[ind].trace;
       emojiReplace.src = emoticonsInfo[ind].emoji;
       nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex];
+
+
+      
 	}
 	
 	function copyEmotion(){
@@ -154,9 +158,14 @@
 		completeTest();
 		return;
 	  }
+
+	  sendPulseSequence(300, 1);
 	  
 	  var ind = locEmoticon(emojiTest[testIndex])
 
+	  var msg = new SpeechSynthesisUtterance();
+		msg.text = emojiTest[testIndex];
+		window.speechSynthesis.speak(msg);
       traceReplace.src = emoticonsInfo[ind].trace;
       emojiReplace.src = emoticonsInfo[ind].emoji;
       nameText.innerHTML = (testIndex + 1) + '. ' + emojiTest[testIndex]; 
