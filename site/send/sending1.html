@@ -14,10 +14,40 @@
   <script src="../js/pDollar.js"></script>
   <script src="../js/shapeDetect.js"></script>
   <script src="../js/vibrate.js"></script>
+  <style>
+    #testDisplay {
+      display: none;
+    }
+  </style>
 </head>
 
 <body onload="onloading()" >
-  <div class="outer">
+  <!-- Info Page -->
+  <div class="container" id="testInfo">
+    <img src="../assets/test_icon.png" style="margin: 2rem 0 1rem; height: 60px;">
+    <div class="heading">
+      <h3 class="blue_heading">Sending Trial</h3>
+      <h5 style="color: #707070"> Method 1: Shape Tracing </h5>
+    </div>
+
+    <div class="bold_info">You will be given 6 emoticons to send without looking at your screen.</div>
+
+    <div style="text-align: left; padding: 0 1.5rem;">
+      <ol class="instruction_list">
+        <li>Upon audio cue, draw the emoticon without looking at your screen.</li>
+        <li>Your phone will vibrate to indicate your emoticon was received. Draw next emoji upon audio cue.</li>
+        <li>A long vibration will indicate that you are finished and can look at screen.</li>
+      </ol>
+    </div>
+
+    <button style="margin-top: 1rem"
+      onclick="displayTest()"
+      class="btn btn-lg blue_btn">Got it, Start</button>
+    </div>
+ </div>
+
+ <!-- Actual Test -->
+  <div class="outer" id="testDisplay">
     <!-- Emoticon -->
     <div class="ellipse">
       <img src="../assets/like.png" alt="emoji" class="emoji">
@@ -56,6 +86,14 @@
     integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
   <script>
+  function displayTest() {
+    var info = document.getElementById("testInfo");
+    var test = document.getElementById("testDisplay");
+    info.style.display = "none";
+    test.style.display = "block";
+  }
+
+
 	$(document).ready(function(){
 		myVar = setInterval("statusRefresh2()", 10);
 	});
