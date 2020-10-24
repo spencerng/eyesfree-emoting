@@ -1,38 +1,24 @@
 /**
- * The $P Point-Cloud Recognizer (JavaScript version)
+ * The $P+ Point-Cloud Recognizer (JavaScript version)
  *
  *  Radu-Daniel Vatavu, Ph.D.
  *  University Stefan cel Mare of Suceava
  *  Suceava 720229, Romania
  *  vatavu@eed.usv.ro
  *
- *  Lisa Anthony, Ph.D.
- *  UMBC
- *  Information Systems Department
- *  1000 Hilltop Circle
- *  Baltimore, MD 21250
- *  lanthony@umbc.edu
- *
- *  Jacob O. Wobbrock, Ph.D.
- *  The Information School
- *  University of Washington
- *  Seattle, WA 98195-2840
- *  wobbrock@uw.edu
- *
- * The academic publication for the $P recognizer, and what should be
+ * The academic publication for the $P+ recognizer, and what should be
  * used to cite it, is:
  *
- *     Vatavu, R.-D., Anthony, L. and Wobbrock, J.O. (2012).
- *     Gestures as point clouds: A $P recognizer for user interface
- *     prototypes. Proceedings of the ACM Int'l Conference on
- *     Multimodal Interfaces (ICMI '12). Santa Monica, California
- *     (October 22-26, 2012). New York: ACM Press, pp. 273-280.
- *     https://dl.acm.org/citation.cfm?id=2388732
+ *     Vatavu, R.-D. (2017). Improving gesture recognition accuracy on
+ *     touch screens for users with low vision. Proceedings of the ACM
+ *     Conference on Human Factors in Computing Systems (CHI '17). Denver,
+ *     Colorado (May 6-11, 2017). New York: ACM Press, pp. 4667-4679.
+ *     https://dl.acm.org/citation.cfm?id=3025941
  *
  * This software is distributed under the "New BSD License" agreement:
  *
- * Copyright (C) 2012, Radu-Daniel Vatavu, Lisa Anthony, and
- * Jacob O. Wobbrock. All rights reserved. Last updated July 14, 2018.
+ * Copyright (C) 2017-2018, Radu-Daniel Vatavu and Jacob O. Wobbrock. All
+ * rights reserved. Last updated July 14, 2018.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
@@ -41,10 +27,9 @@
  *    * Redistributions in binary form must reproduce the above copyright
  *      notice, this list of conditions and the following disclaimer in the
  *      documentation and/or other materials provided with the distribution.
- *    * Neither the names of the University Stefan cel Mare of Suceava,
- *	University of Washington, nor UMBC, nor the names of its contributors
- *	may be used to endorse or promote products derived from this software
- *	without specific prior written permission.
+ *    * Neither the name of the University Stefan cel Mare of Suceava, nor the
+ *      names of its contributors may be used to endorse or promote products
+ *      derived from this software without specific prior written permission.
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
  * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -61,11 +46,12 @@
 //
 // Point class
 //
-function Point(x, y, id) // constructor
+function Point(x, y, id, angle = 0.0)
 {
 	this.X = x;
 	this.Y = y;
-	this.ID = id; // stroke ID to which this point belongs (1,2,3,etc.)
+	this.ID = id;
+	this.Angle = angle; // normalized turning angle, $P+
 }
 //
 // PointCloud class: a point-cloud template
@@ -76,6 +62,7 @@ function PointCloud(name, points) // constructor
 	this.Points = Resample(points, NumPoints);
 	this.Points = Scale(this.Points);
 	this.Points = TranslateTo(this.Points, Origin);
+	this.Points = ComputeNormalizedTurningAngles(this.Points); // $P+
 }
 //
 // Result class
@@ -87,28 +74,30 @@ function Result(name, score, ms) // constructor
 	this.Time = ms;
 }
 //
-// PDollarRecognizer constants
+// PDollarPlusRecognizer constants
 //
 const NumPointClouds = 6;
 const NumPoints = 32;
 const Origin = new Point(0,0,0);
 //
-// PDollarRecognizer class
+// PDollarPlusRecognizer class
 //
-function PDollarRecognizer() // constructor
+function PDollarPlusRecognizer() // constructor
 {
 	//
 	// one predefined point-cloud for each gesture
 	//
 	this.PointClouds = new Array(NumPointClouds);
-    this.PointClouds[0] = new PointCloud("angry", new Array(new Point(87,142),new Point(89,145),new Point(91,148),new Point(93,151),new Point(96,155),new Point(98,157),new Point(100,160),new Point(102,162),new Point(106,167),new Point(108,169),new Point(110,171),new Point(115,177),new Point(119,183),new Point(123,189),new Point(127,193),new Point(129,196),new Point(133,200),new Point(137,206),new Point(140,209),new Point(143,212),new Point(146,215),new Point(151,220),new Point(153,222),new Point(155,223),new Point(157,225),new Point(158,223),new Point(157,218),new Point(155,211),new Point(154,208),new Point(152,200),new Point(150,189),new Point(148,179),new Point(147,170),new Point(147,158),new Point(147,148),new Point(147,141),new Point(147,136),new Point(144,135),new Point(142,137),new Point(140,139),new Point(135,145),new Point(131,152),new Point(124,163),new Point(116,177),new Point(108,191),new Point(100,206),new Point(94,217),new Point(91,222),new Point(89,225),new Point(87,226),new Point(87,224)));
-    this.PointClouds[1] = new PointCloud("like", new Array(new Point(162,302.5),new Point(165,307.5),new Point(166,308.5),new Point(167,309.5),new Point(169,310.5),new Point(170,312.5),new Point(172,313.5),new Point(174,315.5),new Point(176,317.5),new Point(178,319.5),new Point(180,320.5),new Point(182,322.5),new Point(184,323.5),new Point(186,325.5),new Point(191,328.5),new Point(193,330.5),new Point(196,331.5),new Point(199,333.5),new Point(201,335.5),new Point(204,337.5),new Point(206,339.5),new Point(209,341.5),new Point(211,343.5),new Point(213,345.5),new Point(215,348.5),new Point(217,350.5),new Point(219,352.5),new Point(220,354.5),new Point(222,356.5),new Point(223,358.5),new Point(224,360.5),new Point(225,362.5),new Point(226,363.5),new Point(227,364.5),new Point(228,366.5),new Point(228,366.5),new Point(229,367.5),new Point(230,368.5),new Point(230,368.5),new Point(231,369.5),new Point(231,369.5),new Point(232,370.5),new Point(232,370.5),new Point(233,369.5),new Point(234,369.5),new Point(235,369.5),new Point(235,367.5),new Point(236,366.5),new Point(238,364.5),new Point(239,361.5),new Point(240,357.5),new Point(242,353.5),new Point(244,348.5),new Point(246,343.5),new Point(248,337.5),new Point(251,331.5),new Point(254,324.5),new Point(256,318.5),new Point(260,310.5),new Point(263,303.5),new Point(267,296.5),new Point(271,288.5),new Point(275,280.5),new Point(279,272.5),new Point(283,263.5),new Point(287,254.5),new Point(291,245.5),new Point(295,236.5),new Point(299,228.5),new Point(303,219.5),new Point(308,210.5),new Point(312,201.5),new Point(316,193.5),new Point(320,186.5),new Point(324,180.5),new Point(327,174.5),new Point(331,169.5),new Point(334,165.5),new Point(339,158.5),new Point(341,156.5),new Point(342,154.5),new Point(345,151.5),new Point(345,151.5),new Point(346,151.5)));
-    this.PointClouds[2] = new PointCloud("love", new Array(new Point(72,157),new Point(72,158),new Point(72,158),new Point(72,158),new Point(72,158),new Point(73,159),new Point(73,160),new Point(73,160),new Point(74,161),new Point(74,162),new Point(74,163),new Point(75,163),new Point(76,164),new Point(76,166),new Point(78,169),new Point(79,170),new Point(79,172),new Point(82,176),new Point(83,179),new Point(84,182),new Point(86,184),new Point(87,187),new Point(88,189),new Point(90,192),new Point(91,195),new Point(93,198),new Point(95,200),new Point(97,203),new Point(99,206),new Point(100,208),new Point(102,211),new Point(104,214),new Point(106,217),new Point(108,220),new Point(109,223),new Point(111,226),new Point(113,229),new Point(114,232),new Point(116,235),new Point(117,237),new Point(119,240),new Point(120,242),new Point(122,245),new Point(123,248),new Point(124,250),new Point(126,253),new Point(127,255),new Point(128,257),new Point(129,260),new Point(130,262),new Point(131,264),new Point(132,267),new Point(133,269),new Point(134,272),new Point(136,274),new Point(137,276),new Point(138,279),new Point(139,281),new Point(140,283),new Point(142,285),new Point(143,287),new Point(144,290),new Point(145,292),new Point(146,294),new Point(147,296),new Point(148,297),new Point(149,299),new Point(149,301),new Point(150,303),new Point(151,304),new Point(152,306),new Point(153,307),new Point(153,308),new Point(154,310),new Point(155,311),new Point(155,312),new Point(156,313),new Point(156,313),new Point(156,314),new Point(157,315),new Point(157,316),new Point(157,316),new Point(158,317),new Point(158,317),new Point(158,318),new Point(158,318),new Point(158,318),new Point(158,319),new Point(158,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,319),new Point(159,318),new Point(159,317),new Point(160,317),new Point(160,316),new Point(161,316),new Point(161,315),new Point(162,314),new Point(162,313),new Point(163,312),new Point(164,311),new Point(164,310),new Point(165,309),new Point(166,308),new Point(166,306),new Point(167,305),new Point(168,304),new Point(168,303),new Point(169,302),new Point(170,301),new Point(170,300),new Point(171,299),new Point(172,298),new Point(173,297),new Point(173,296),new Point(174,295),new Point(174,293),new Point(175,292),new Point(175,291),new Point(176,290),new Point(177,289),new Point(177,288),new Point(178,287),new Point(179,285),new Point(180,284),new Point(180,283),new Point(181,281),new Point(182,280),new Point(182,278),new Point(183,277),new Point(184,275),new Point(184,274),new Point(185,272),new Point(185,271),new Point(186,269),new Point(187,268),new Point(187,266),new Point(188,265),new Point(188,263),new Point(189,261),new Point(189,260),new Point(190,258),new Point(190,257),new Point(191,256),new Point(191,254),new Point(192,253),new Point(192,251),new Point(192,249),new Point(193,247),new Point(193,245),new Point(194,244),new Point(194,242),new Point(194,240),new Point(195,239),new Point(195,237),new Point(196,236),new Point(196,234),new Point(196,232),new Point(197,230),new Point(197,229),new Point(198,227),new Point(198,226),new Point(198,224),new Point(199,222),new Point(199,220),new Point(199,219),new Point(199,217),new Point(200,216),new Point(200,215),new Point(201,213),new Point(201,212),new Point(202,210),new Point(202,209),new Point(202,207),new Point(203,206),new Point(203,205),new Point(204,203),new Point(204,202),new Point(204,201),new Point(205,199),new Point(205,197),new Point(206,196),new Point(206,194),new Point(206,192),new Point(207,190),new Point(207,189),new Point(208,187),new Point(208,185),new Point(208,183),new Point(209,181),new Point(209,179),new Point(209,178),new Point(210,176),new Point(210,174),new Point(211,173),new Point(211,171),new Point(212,170),new Point(212,169),new Point(213,167),new Point(213,166),new Point(214,165),new Point(214,165),new Point(215,164),new Point(215,164),new Point(215,164),new Point(215,163),new Point(215,163),new Point(215,163),new Point(215,163),new Point(215,163),new Point(215,163),new Point(215,163),new Point(215,163),new Point(215,163),new Point(214,163),new Point(214,163),new Point(213,163),new Point(213,162),new Point(212,161),new Point(212,160),new Point(211,159),new Point(210,158),new Point(210,157),new Point(209,156),new Point(208,155),new Point(208,154),new Point(207,152),new Point(206,151),new Point(204,149),new Point(203,147),new Point(202,145),new Point(200,143),new Point(199,141),new Point(197,139),new Point(196,137),new Point(194,135),new Point(193,134),new Point(192,132),new Point(190,130),new Point(188,129),new Point(187,127),new Point(185,126),new Point(183,125),new Point(181,123),new Point(179,122),new Point(177,121),new Point(176,121),new Point(174,120),new Point(172,119),new Point(170,118),new Point(169,118),new Point(167,118),new Point(165,118),new Point(164,118),new Point(162,118),new Point(160,119),new Point(158,119),new Point(157,119),new Point(155,120),new Point(154,120),new Point(152,121),new Point(151,121),new Point(150,122),new Point(149,122),new Point(148,123),new Point(147,123),new Point(146,124),new Point(145,125),new Point(144,126),new Point(144,126),new Point(143,127),new Point(142,128),new Point(141,128),new Point(141,129),new Point(140,130),new Point(140,131),new Point(140,132),new Point(139,133),new Point(139,134),new Point(139,136),new Point(139,137),new Point(139,139),new Point(139,140),new Point(139,142),new Point(139,144),new Point(139,146),new Point(139,147),new Point(139,149),new Point(139,151),new Point(139,153),new Point(140,155),new Point(140,157),new Point(140,159),new Point(141,161),new Point(141,163),new Point(141,166),new Point(141,168),new Point(142,170),new Point(142,171),new Point(142,173),new Point(142,175),new Point(142,176),new Point(142,178),new Point(142,179),new Point(142,180),new Point(142,181),new Point(142,182),new Point(142,183),new Point(142,183),new Point(142,184),new Point(142,184),new Point(142,184),new Point(142,184),new Point(142,184),new Point(142,184),new Point(142,183),new Point(142,182),new Point(141,181),new Point(141,180),new Point(141,179),new Point(141,178),new Point(140,177),new Point(140,176),new Point(139,175),new Point(139,173),new Point(138,172),new Point(138,171),new Point(137,169),new Point(136,168),new Point(135,166),new Point(134,164),new Point(133,162),new Point(132,160),new Point(131,158),new Point(130,156),new Point(129,154),new Point(128,152),new Point(126,150),new Point(125,148),new Point(124,146),new Point(123,144),new Point(121,141),new Point(120,139),new Point(118,137),new Point(117,136),new Point(115,134),new Point(114,133),new Point(113,131),new Point(112,130),new Point(110,129),new Point(109,128),new Point(107,127),new Point(106,126),new Point(104,125),new Point(103,125),new Point(102,124),new Point(100,124),new Point(98,123),new Point(96,123),new Point(95,123),new Point(93,122),new Point(91,122),new Point(90,123),new Point(89,123),new Point(88,123),new Point(86,123),new Point(85,124),new Point(84,124),new Point(83,125),new Point(83,125),new Point(82,126),new Point(81,127),new Point(81,128),new Point(80,128),new Point(80,129),new Point(79,131),new Point(79,132),new Point(78,133),new Point(77,134),new Point(77,136),new Point(76,137),new Point(76,138),new Point(75,140),new Point(74,141),new Point(74,143),new Point(74,144),new Point(73,146),new Point(73,147),new Point(74,149),new Point(74,150),new Point(75,152),new Point(76,154),new Point(77,155),new Point(78,157),new Point(79,159),new Point(80,160),new Point(81,162),new Point(81,163),new Point(83,166),new Point(84,167),new Point(85,168),new Point(85,169),new Point(85,169),new Point(85,169),new Point(85,169)));
-    this.PointClouds[3] = new PointCloud("yay", new Array(new Point(70,219),new Point(71,222),new Point(71,223),new Point(72,224),new Point(72,226),new Point(73,227),new Point(74,229),new Point(76,233),new Point(78,235),new Point(79,237),new Point(82,242),new Point(83,244),new Point(85,247),new Point(87,249),new Point(89,252),new Point(91,254),new Point(93,257),new Point(95,259),new Point(98,262),new Point(100,264),new Point(103,267),new Point(105,270),new Point(108,272),new Point(111,275),new Point(113,277),new Point(116,280),new Point(118,282),new Point(121,285),new Point(124,287),new Point(127,290),new Point(129,292),new Point(132,294),new Point(134,296),new Point(137,298),new Point(140,301),new Point(143,302),new Point(146,304),new Point(149,306),new Point(152,308),new Point(155,309),new Point(158,310),new Point(161,311),new Point(164,312),new Point(167,313),new Point(170,313),new Point(174,313),new Point(177,313),new Point(181,313),new Point(185,313),new Point(188,312),new Point(192,311),new Point(196,310),new Point(200,309),new Point(204,308),new Point(207,307),new Point(211,306),new Point(214,304),new Point(218,302),new Point(222,300),new Point(226,298),new Point(230,295),new Point(234,292),new Point(237,288),new Point(241,284),new Point(245,280),new Point(249,275),new Point(253,270),new Point(256,264),new Point(260,257),new Point(264,249),new Point(267,241),new Point(270,233),new Point(272,226),new Point(273,219),new Point(275,213),new Point(276,207),new Point(277,202),new Point(280,195),new Point(282,191),new Point(282,190),new Point(283,190)));
-    this.PointClouds[4] = new PointCloud("laugh", new Array(new Point(88,220),new Point(88,220),new Point(88,220),new Point(88,220),new Point(88,220),new Point(88,220),new Point(89,220),new Point(89,219),new Point(90,219),new Point(91,219),new Point(92,219),new Point(93,219),new Point(94,219),new Point(95,219),new Point(97,219),new Point(98,219),new Point(100,219),new Point(101,218),new Point(103,218),new Point(105,218),new Point(107,218),new Point(109,218),new Point(111,218),new Point(114,218),new Point(116,218),new Point(119,218),new Point(121,218),new Point(124,218),new Point(126,218),new Point(129,218),new Point(132,218),new Point(136,218),new Point(139,218),new Point(142,217),new Point(146,217),new Point(149,216),new Point(153,216),new Point(157,215),new Point(161,215),new Point(165,214),new Point(169,214),new Point(174,213),new Point(178,212),new Point(183,212),new Point(187,211),new Point(192,211),new Point(196,211),new Point(201,211),new Point(206,211),new Point(210,210),new Point(215,210),new Point(219,210),new Point(224,210),new Point(228,209),new Point(231,209),new Point(235,209),new Point(239,209),new Point(242,209),new Point(246,209),new Point(249,208),new Point(253,208),new Point(256,208),new Point(259,208),new Point(263,207),new Point(266,207),new Point(270,206),new Point(273,206),new Point(277,206),new Point(280,205),new Point(287,205),new Point(290,205),new Point(293,205),new Point(295,205),new Point(298,205),new Point(300,206),new Point(302,206),new Point(304,206),new Point(306,207),new Point(308,208),new Point(309,208),new Point(310,209),new Point(311,209),new Point(312,209),new Point(313,210),new Point(313,211),new Point(313,211),new Point(314,211),new Point(314,212),new Point(314,212),new Point(314,212),new Point(314,212),new Point(314,212),new Point(314,213),new Point(314,213),new Point(314,213),new Point(314,213),new Point(314,213),new Point(314,214),new Point(314,214),new Point(313,215),new Point(313,215),new Point(313,216),new Point(313,216),new Point(312,217),new Point(312,217),new Point(312,217),new Point(311,218),new Point(311,219),new Point(311,221),new Point(310,222),new Point(310,223),new Point(309,224),new Point(309,226),new Point(308,228),new Point(308,230),new Point(307,233),new Point(306,235),new Point(306,238),new Point(305,241),new Point(303,244),new Point(302,247),new Point(301,251),new Point(299,254),new Point(297,257),new Point(295,261),new Point(293,264),new Point(291,268),new Point(288,271),new Point(285,274),new Point(281,277),new Point(278,280),new Point(275,283),new Point(272,286),new Point(269,289),new Point(266,292),new Point(262,295),new Point(259,297),new Point(256,299),new Point(252,301),new Point(249,302),new Point(245,304),new Point(242,305),new Point(239,307),new Point(236,308),new Point(233,309),new Point(230,310),new Point(227,311),new Point(224,311),new Point(221,312),new Point(219,312),new Point(216,313),new Point(213,313),new Point(211,313),new Point(208,314),new Point(205,314),new Point(202,314),new Point(199,314),new Point(197,314),new Point(194,314),new Point(191,313),new Point(188,313),new Point(185,313),new Point(182,312),new Point(179,312),new Point(176,311),new Point(173,310),new Point(170,310),new Point(167,308),new Point(164,307),new Point(161,306),new Point(158,305),new Point(155,303),new Point(153,302),new Point(150,300),new Point(147,298),new Point(144,297),new Point(142,295),new Point(139,293),new Point(136,291),new Point(134,289),new Point(131,287),new Point(129,285),new Point(127,283),new Point(125,282),new Point(123,280),new Point(121,278),new Point(119,276),new Point(117,274),new Point(116,272),new Point(114,270),new Point(113,268),new Point(111,266),new Point(109,263),new Point(108,261),new Point(106,259),new Point(105,257),new Point(103,255),new Point(101,253),new Point(99,251),new Point(97,248),new Point(96,246),new Point(94,244),new Point(93,242),new Point(91,240),new Point(90,238),new Point(89,235),new Point(88,233),new Point(87,231),new Point(86,229),new Point(85,227),new Point(85,225),new Point(85,223),new Point(85,221),new Point(85,219),new Point(85,217),new Point(85,215),new Point(85,214),new Point(86,213),new Point(86,212),new Point(87,211),new Point(87,211)));
-    this.PointClouds[5] = new PointCloud("sad", new Array(new Point(331,281),new Point(331,280),new Point(332,279),new Point(332,277),new Point(333,276),new Point(334,274),new Point(334,273),new Point(335,271),new Point(336,269),new Point(337,267),new Point(338,264),new Point(338,262),new Point(339,260),new Point(340,258),new Point(341,256),new Point(342,254),new Point(342,253),new Point(343,251),new Point(343,250),new Point(343,249),new Point(344,248),new Point(344,247),new Point(345,246),new Point(345,245),new Point(346,243),new Point(347,242),new Point(347,240),new Point(348,239),new Point(348,237),new Point(349,236),new Point(350,235),new Point(350,233),new Point(351,232),new Point(351,231),new Point(351,231),new Point(352,230),new Point(352,229),new Point(352,228),new Point(352,228),new Point(353,227),new Point(354,226),new Point(354,225),new Point(355,225),new Point(356,224),new Point(357,223),new Point(358,222),new Point(360,221),new Point(362,220),new Point(363,219),new Point(365,219),new Point(367,218),new Point(369,217),new Point(371,216),new Point(373,216),new Point(375,215),new Point(377,215),new Point(379,215),new Point(382,214),new Point(384,214),new Point(386,214),new Point(388,214),new Point(390,214),new Point(391,214),new Point(393,214),new Point(394,214),new Point(395,214),new Point(397,214),new Point(398,214),new Point(399,215),new Point(400,215),new Point(401,215),new Point(402,215),new Point(402,215),new Point(403,216),new Point(404,216),new Point(405,216),new Point(406,216),new Point(407,216),new Point(408,217),new Point(409,217),new Point(410,217),new Point(412,218),new Point(413,218),new Point(415,219),new Point(416,219),new Point(418,220),new Point(419,220),new Point(421,221),new Point(422,222),new Point(423,223),new Point(425,224),new Point(426,224),new Point(427,225),new Point(428,226),new Point(429,227),new Point(430,228),new Point(431,230),new Point(432,231),new Point(433,233),new Point(435,235),new Point(436,237),new Point(438,238),new Point(439,240),new Point(440,241),new Point(441,243),new Point(442,244),new Point(444,245),new Point(445,246),new Point(445,247),new Point(446,249),new Point(447,250),new Point(448,251),new Point(449,252),new Point(450,253),new Point(451,254),new Point(452,256),new Point(453,257),new Point(453,259),new Point(454,260),new Point(454,261),new Point(455,261),new Point(455,263),new Point(455,263),new Point(455,264),new Point(455,264),new Point(455,264),new Point(455,265),new Point(455,265),new Point(455,265)));
+	this.PointClouds = new Array(NumPointClouds);
+    this.PointClouds[0] = new PointCloud("angry", new Array(new Point(455,201,1),new Point(467,219.5,1),new Point(469.5,223,1),new Point(472.5,226.5,1),new Point(476,230,1),new Point(478.5,233,1),new Point(482,236,1),new Point(485,239.5,1),new Point(488.5,243,1),new Point(491.5,247,1),new Point(495.5,250.5,1),new Point(498.5,254,1),new Point(502,258,1),new Point(505,262,1),new Point(508.5,266.5,1),new Point(512,270.5,1),new Point(516,274.5,1),new Point(519.5,278.5,1),new Point(523,282.5,1),new Point(526,286.5,1),new Point(529.5,290.5,1),new Point(533,294.5,1),new Point(536.5,298,1),new Point(540.5,302,1),new Point(543.5,306,1),new Point(547,310.5,1),new Point(550.5,316,1),new Point(554.5,321,1),new Point(559,326.5,1),new Point(563,331.5,1),new Point(566.5,337,1),new Point(570,342,1),new Point(574,347,1),new Point(577.5,351.5,1),new Point(581,355.5,1),new Point(584,359,1),new Point(586.5,362,1),new Point(589.5,364,1),new Point(592,366,1),new Point(594.5,368,1),new Point(576.5,203,2),new Point(560,214,2),new Point(557.5,217,2),new Point(555,220.5,2),new Point(552.5,224,2),new Point(549.5,227.5,2),new Point(547,231.5,2),new Point(545,236,2),new Point(543,241,2),new Point(541.5,245.5,2),new Point(540.5,250.5,2),new Point(539.5,255,2),new Point(539,259.5,2),new Point(538.5,264.5,2),new Point(538,269.5,2),new Point(537.5,274,2),new Point(537,279,2),new Point(535.5,284,2),new Point(532.5,290,2),new Point(529,296,2),new Point(525.5,302.5,2),new Point(521.5,308.5,2),new Point(517,314.5,2),new Point(512,320,2),new Point(507,326,2),new Point(502,332,2),new Point(497,338.5,2),new Point(492.5,344.5,2),new Point(488,350,2),new Point(484,355,2),new Point(481,359.5,2),new Point(478.5,363.5,2),new Point(477,366.5,2),new Point(476.5,368.5,2),new Point(476,370.5,2),new Point(475.5,372.5,2),new Point(476,373.5,2),new Point(476.5,374.5,2)));
+    this.PointClouds[1] = new PointCloud("like", new Array(new Point(477,414.5,1),new Point(481.5,430,1),new Point(482,432,1),new Point(482.5,434,1),new Point(484,438.5,1),new Point(485,440.5,1),new Point(486,442.5,1),new Point(489,446.5,1),new Point(490.5,448.5,1),new Point(492,450,1),new Point(494,452,1),new Point(496,453.5,1),new Point(497.5,455.5,1),new Point(499,457,1),new Point(500,458.5,1),new Point(501,460.5,1),new Point(502,462.5,1),new Point(503,464,1),new Point(504,466.5,1),new Point(505,468.5,1),new Point(505.5,470.5,1),new Point(506.5,472.5,1),new Point(507,474.5,1),new Point(507.5,476.5,1),new Point(508.5,478,1),new Point(509,479,1),new Point(509.5,480,1),new Point(510.5,480.5,1),new Point(511,481.5,1),new Point(511.5,482.5,1),new Point(511.5,483,1),new Point(512,483.5,1),new Point(512,484,1),new Point(512,484.5,1),new Point(512,485,1),new Point(512.5,485,1),new Point(513,483.5,1),new Point(513.5,482.5,1),new Point(514,481.5,1),new Point(515,480.5,1),new Point(516,479.5,1),new Point(517,478.5,1),new Point(518.5,477,1),new Point(519.5,475,1),new Point(521,473,1),new Point(522.5,471,1),new Point(523.5,468.5,1),new Point(525,466,1),new Point(527,463.5,1),new Point(529,460,1),new Point(532.5,455.5,1),new Point(536,450.5,1),new Point(540.5,444.5,1),new Point(545.5,437,1),new Point(552.5,428,1),new Point(559,417.5,1),new Point(566,407,1),new Point(574,395,1),new Point(599,357,1),new Point(606.5,344.5,1),new Point(613,333.5,1),new Point(619,323.5,1),new Point(624.5,314.5,1),new Point(628.5,306.5,1),new Point(632,299.5,1),new Point(634,293,1),new Point(636,287.5,1)));
+    this.PointClouds[2] = new PointCloud("love", new Array(new Point(402.5,317.5,1),new Point(404.5,337,1),new Point(405.5,341,1),new Point(406,344.5,1),new Point(407,348,1),new Point(411,359,1),new Point(412.5,361.5,1),new Point(414,364.5,1),new Point(415.5,367,1),new Point(417.5,369.5,1),new Point(419,373,1),new Point(421,376.5,1),new Point(423.5,380,1),new Point(426,383.5,1),new Point(429,387.5,1),new Point(432,391,1),new Point(434.5,395,1),new Point(437,399,1),new Point(439.5,403,1),new Point(442,407,1),new Point(443.5,411.5,1),new Point(446,415.5,1),new Point(448,419.5,1),new Point(450.5,423.5,1),new Point(452.5,427,1),new Point(455,431,1),new Point(456.5,434.5,1),new Point(458.5,438,1),new Point(459.5,440.5,1),new Point(461,443,1),new Point(462,445,1),new Point(463,447,1),new Point(464,448.5,1),new Point(465,450,1),new Point(466.5,451,1),new Point(468,452.5,1),new Point(470,453.5,1),new Point(472,454.5,1),new Point(473.5,455,1),new Point(475,456,1),new Point(476.5,457,1),new Point(478,458,1),new Point(479.5,459.5,1),new Point(481,460.5,1),new Point(482,462,1),new Point(483.5,464,1),new Point(484.5,465,1),new Point(486,467,1),new Point(487,468.5,1),new Point(488,470,1),new Point(488.5,471.5,1),new Point(489,473,1),new Point(489.5,473.5,1),new Point(489.5,474,1),new Point(489,474,1),new Point(489,472.5,1),new Point(490,471,1),new Point(490.5,469.5,1),new Point(491.5,467.5,1),new Point(492.5,465,1),new Point(494,462.5,1),new Point(495,459.5,1),new Point(496.5,456,1),new Point(497.5,452.5,1),new Point(498.5,448.5,1),new Point(500,444.5,1),new Point(501,440,1),new Point(502,435,1),new Point(503,429.5,1),new Point(503.5,424,1),new Point(504.5,418,1),new Point(505,411.5,1),new Point(506,405.5,1),new Point(506.5,399,1),new Point(507,392.5,1),new Point(508,386,1),new Point(508.5,380,1),new Point(509,374,1),new Point(509.5,369,1),new Point(510,364,1),new Point(510.5,359.5,1),new Point(511.5,354.5,1),new Point(512.5,350,1),new Point(513.5,344.5,1),new Point(515,339.5,1),new Point(517,334,1),new Point(518.5,328,1),new Point(520,322,1),new Point(521.5,317,1),new Point(522,312.5,1),new Point(522,309,1),new Point(522,306,1),new Point(521,303,1),new Point(520,301,1),new Point(518.5,298.5,1),new Point(516.5,297,1),new Point(515,295.5,1),new Point(512.5,294.5,1),new Point(510.5,293.5,1),new Point(508,292.5,1),new Point(505.5,292,1),new Point(503,291,1),new Point(501,290.5,1),new Point(499,290,1),new Point(497.5,290,1),new Point(495,289.5,1),new Point(492.5,289.5,1),new Point(490,289.5,1),new Point(487.5,289.5,1),new Point(484.5,290,1),new Point(482.5,290.5,1),new Point(480.5,291.5,1),new Point(479,293,1),new Point(477,294.5,1),new Point(475.5,297,1),new Point(473.5,300.5,1),new Point(472,304,1),new Point(470.5,308,1),new Point(469,311.5,1),new Point(468.5,315,1),new Point(467.5,318.5,1),new Point(467.5,322,1),new Point(467,325,1),new Point(467,328.5,1),new Point(467.5,332,1),new Point(468,335,1),new Point(468.5,338,1),new Point(469,340.5,1),new Point(470,343,1),new Point(471,346,1),new Point(471.5,348,1),new Point(472.5,350.5,1),new Point(473.5,352,1),new Point(474.5,353.5,1),new Point(475,354.5,1),new Point(476,355,1),new Point(476.5,355,1),new Point(477,354.5,1),new Point(477.5,354,1),new Point(477.5,353,1),new Point(477.5,352,1),new Point(478,351,1),new Point(478,349.5,1),new Point(477.5,348.5,1),new Point(477.5,347,1),new Point(477.5,346,1),new Point(477,345,1),new Point(476,344,1),new Point(475,343,1),new Point(473.5,341.5,1),new Point(472,340,1),new Point(470,338,1),new Point(468.5,336,1),new Point(466,334,1),new Point(464,332,1),new Point(462,329.5,1),new Point(459.5,326,1),new Point(458,323,1),new Point(456,320,1),new Point(453.5,317.5,1),new Point(450.5,314.5,1),new Point(447,312,1),new Point(443.5,309.5,1),new Point(439.5,307.5,1),new Point(436,305.5,1),new Point(433,303.5,1),new Point(430,302,1),new Point(427,301,1),new Point(423.5,300.5,1),new Point(421,300,1),new Point(418.5,300,1),new Point(416,300.5,1),new Point(414.5,301.5,1),new Point(413,303,1),new Point(412,304.5,1),new Point(410.5,307,1),new Point(409.5,309,1),new Point(409,311.5,1),new Point(408.5,314,1),new Point(408,316.5,1),new Point(408,319.5,1),new Point(408,322.5,1),new Point(408.5,326,1),new Point(409.5,329.5,1),new Point(410.5,332.5,1),new Point(411.5,336,1),new Point(412.5,339,1),new Point(413.5,343,1),new Point(414.5,346.5,1),new Point(415.5,350,1),new Point(416.5,353.5,1),new Point(417,356,1),new Point(418,358.5,1),new Point(419,359.5,1),new Point(419.5,360.5,1),new Point(420.5,360.5,1),new Point(422,359.5,1)));
+    this.PointClouds[3] = new PointCloud("yay", new Array(new Point(365.5,365.5,1),new Point(375,384,1),new Point(376,387.5,1),new Point(376.5,391,1),new Point(377.5,394.5,1),new Point(379,397,1),new Point(380.5,399.5,1),new Point(382.5,401.5,1),new Point(384.5,404,1),new Point(387,405.5,1),new Point(390,407,1),new Point(392.5,408.5,1),new Point(395,410.5,1),new Point(398,413,1),new Point(400.5,415,1),new Point(403.5,417,1),new Point(407,419,1),new Point(410.5,420.5,1),new Point(414.5,422.5,1),new Point(417.5,423.5,1),new Point(421,425,1),new Point(424.5,426,1),new Point(428.5,427,1),new Point(432.5,427.5,1),new Point(436.5,428,1),new Point(440.5,428,1),new Point(445,428,1),new Point(449,427.5,1),new Point(453.5,426.5,1),new Point(457.5,426,1),new Point(461,425,1),new Point(464.5,424,1),new Point(468,423,1),new Point(472,421.5,1),new Point(475.5,419.5,1),new Point(479,417.5,1),new Point(482.5,415.5,1),new Point(485.5,413,1),new Point(488.5,411,1),new Point(491.5,408.5,1),new Point(495,405.5,1),new Point(497.5,402.5,1),new Point(500,399.5,1),new Point(502,396.5,1),new Point(503.5,393,1),new Point(504.5,390,1),new Point(505.5,387,1),new Point(506.5,384,1),new Point(507,381.5,1),new Point(507.5,378.5,1),new Point(507.5,376.5,1),new Point(507.5,374.5,1),new Point(508,373,1),new Point(508,371.5,1),new Point(508,370.5,1),new Point(507.5,369.5,1),new Point(507.5,369,1),new Point(507.5,368,1),new Point(507,368,1),new Point(507.5,367.5,1),new Point(508,367,1),new Point(508.5,367,1),new Point(509,366.5,1)));
+    this.PointClouds[4] = new PointCloud("laugh", new Array(new Point(399,297,1),new Point(414.5,298.5,1),new Point(417.5,297.5,1),new Point(422,296,1),new Point(427.5,294,1),new Point(432.5,292,1),new Point(444,287,1),new Point(450,284.5,1),new Point(456.5,282,1),new Point(461.5,280.5,1),new Point(467.5,279,1),new Point(473.5,278,1),new Point(479,277.5,1),new Point(484.5,277,1),new Point(490.5,276,1),new Point(497,275.5,1),new Point(502.5,274.5,1),new Point(508.5,274,1),new Point(514,273,1),new Point(519.5,272.5,1),new Point(524,272,1),new Point(527.5,272,1),new Point(530.5,272,1),new Point(533,272.5,1),new Point(535.5,273,1),new Point(537,273.5,1),new Point(538.5,274,1),new Point(540,275.5,1),new Point(541,276,1),new Point(542.5,277,1),new Point(543.5,277.5,1),new Point(544,278.5,1),new Point(544.5,278.5,1),new Point(545,278.5,1),new Point(545.5,279,1),new Point(545,279,1),new Point(545,278.5,1),new Point(544.5,278.5,1),new Point(544,278.5,1),new Point(543.5,279,1),new Point(543.5,280,1),new Point(543,281.5,1),new Point(542.5,283.5,1),new Point(542,286,1),new Point(541,288.5,1),new Point(540,291.5,1),new Point(539,294,1),new Point(538,296.5,1),new Point(537,299.5,1),new Point(536,303,1),new Point(535,307,1),new Point(533.5,311.5,1),new Point(532,315.5,1),new Point(530.5,320.5,1),new Point(528.5,326,1),new Point(526.5,331.5,1),new Point(524.5,337,1),new Point(522.5,342.5,1),new Point(520,348.5,1),new Point(518,353.5,1),new Point(515,358.5,1),new Point(511.5,362,1),new Point(507.5,365.5,1),new Point(504,368,1),new Point(500.5,370,1),new Point(496.5,371.5,1),new Point(492,372.5,1),new Point(488,373,1),new Point(483.5,373.5,1),new Point(479.5,373,1),new Point(475.5,372.5,1),new Point(471.5,371.5,1),new Point(467.5,370.5,1),new Point(463,369,1),new Point(459,368,1),new Point(456,366.5,1),new Point(453,365.5,1),new Point(449.5,364.5,1),new Point(446,363.5,1),new Point(442.5,362.5,1),new Point(440,361.5,1),new Point(437,360.5,1),new Point(435,359.5,1),new Point(433,358.5,1),new Point(431.5,357.5,1),new Point(429.5,356.5,1),new Point(428,355,1),new Point(426.5,353.5,1),new Point(424,352,1),new Point(422.5,349.5,1),new Point(420.5,347.5,1),new Point(418.5,345,1),new Point(416.5,343,1),new Point(415,340.5,1),new Point(413.5,339,1),new Point(412,337.5,1),new Point(410.5,336,1),new Point(409.5,334,1),new Point(408.5,332.5,1),new Point(408,330.5,1),new Point(407.5,328.5,1),new Point(407.5,326.5,1),new Point(408,324,1),new Point(408.5,322,1),new Point(409,320,1),new Point(409.5,318.5,1),new Point(410,317,1),new Point(410,316,1),new Point(410,315.5,1),new Point(409.5,315,1),new Point(409,314.5,1),new Point(408,314.5,1),new Point(407.5,314.5,1),new Point(407,314.5,1),new Point(406.5,314,1),new Point(406,313.5,1),new Point(406,313,1),new Point(406.5,312,1),new Point(407,311,1),new Point(407.5,310.5,1),new Point(408,309.5,1),new Point(408.5,309,1),new Point(408.5,308.5,1),new Point(408,308.5,1),new Point(407.5,308.5,1),new Point(406.5,309,1),new Point(405,310,1)));
+    this.PointClouds[5] = new PointCloud("sad", new Array(new Point(506,456,1),new Point(510.5,440.5,1),new Point(511.5,438,1),new Point(513,435.5,1),new Point(515,432,1),new Point(517,428,1),new Point(519,424,1),new Point(521,420,1),new Point(523,416,1),new Point(524.5,413,1),new Point(526.5,409.5,1),new Point(528.5,407,1),new Point(530.5,404.5,1),new Point(533,402.5,1),new Point(535.5,401,1),new Point(537.5,399.5,1),new Point(539.5,399,1),new Point(541,398.5,1),new Point(543,398.5,1),new Point(544.5,398.5,1),new Point(546,398,1),new Point(548,398.5,1),new Point(550.5,398.5,1),new Point(553,399,1),new Point(556,399.5,1),new Point(559,399.5,1),new Point(562,400,1),new Point(565,400.5,1),new Point(567.5,401,1),new Point(569.5,401.5,1),new Point(572,402.5,1),new Point(574.5,404,1),new Point(577.5,404.5,1),new Point(580,405.5,1),new Point(582.5,406.5,1),new Point(584.5,407.5,1),new Point(586.5,408.5,1),new Point(588,409.5,1),new Point(589.5,410.5,1),new Point(591,411.5,1),new Point(592.5,413,1),new Point(594,415,1),new Point(595.5,416.5,1),new Point(597,419,1),new Point(598.5,421.5,1),new Point(599.5,423.5,1),new Point(601,426,1),new Point(601.5,428.5,1),new Point(602.5,430.5,1),new Point(603.5,432.5,1),new Point(604.5,435,1),new Point(605,437,1),new Point(605.5,439.5,1),new Point(606,441.5,1),new Point(606,444.5,1),new Point(606.5,447,1),new Point(606.5,449,1),new Point(607,451,1),new Point(607,453,1),new Point(607,454.5,1),new Point(607,455.5,1),new Point(607,456,1),new Point(607.5,456,1),new Point(608,453,1)));
+	
 	//
-	// The $P Point-Cloud Recognizer API begins here -- 3 methods: Recognize(), AddGesture(), DeleteUserGestures()
+	// The $P+ Point-Cloud Recognizer API begins here -- 3 methods: Recognize(), AddGesture(), DeleteUserGestures()
 	//
 	this.Recognize = function(points)
 	{
@@ -119,7 +108,10 @@ function PDollarRecognizer() // constructor
 		var b = +Infinity;
 		for (var i = 0; i < this.PointClouds.length; i++) // for each point-cloud template
 		{
-			var d = GreedyCloudMatch(candidate.Points, this.PointClouds[i]);
+			var d = Math.min(
+				CloudDistance(candidate.Points, this.PointClouds[i].Points),
+				CloudDistance(this.PointClouds[i].Points, candidate.Points)
+				); // $P+
 			if (d < b) {
 				b = d; // best (least) distance
 				u = i; // point-cloud index
@@ -147,44 +139,39 @@ function PDollarRecognizer() // constructor
 //
 // Private helper functions from here on down
 //
-function GreedyCloudMatch(points, P)
-{
-	var e = 0.50;
-	var step = Math.floor(Math.pow(points.length, 1.0 - e));
-	var min = +Infinity;
-	for (var i = 0; i < points.length; i += step) {
-		var d1 = CloudDistance(points, P.Points, i);
-		var d2 = CloudDistance(P.Points, points, i);
-		min = Math.min(min, Math.min(d1, d2)); // min3
-	}
-	return min;
-}
-function CloudDistance(pts1, pts2, start)
+function CloudDistance(pts1, pts2) // revised for $P+
 {
 	var matched = new Array(pts1.length); // pts1.length == pts2.length
 	for (var k = 0; k < pts1.length; k++)
 		matched[k] = false;
 	var sum = 0;
-	var i = start;
-	do
+	for (var i = 0; i < pts1.length; i++)
 	{
 		var index = -1;
 		var min = +Infinity;
-		for (var j = 0; j < matched.length; j++)
+		for (var j = 0; j < pts1.length; j++)
 		{
-			if (!matched[j]) {
-				var d = Distance(pts1[i], pts2[j]);
-				if (d < min) {
-					min = d;
-					index = j;
-				}
+			var d = DistanceWithAngle(pts1[i], pts2[j]);
+			if (d < min) {
+				min = d;
+				index = j;
 			}
 		}
 		matched[index] = true;
-		var weight = 1 - ((i - start + pts1.length) % pts1.length) / pts1.length;
-		sum += weight * min;
-		i = (i + 1) % pts1.length;
-	} while (i != start);
+		sum += min;
+	}
+	for (var j = 0; j < matched.length; j++)
+	{
+		if (!matched[j]) {
+			var min = +Infinity;
+			for (var i = 0; i < pts1.length; i++) {
+				var d = DistanceWithAngle(pts1[i], pts2[j]);
+				if (d < min)
+					min = d;
+			}
+			sum += min;
+		}
+	}
 	return sum;
 }
 function Resample(points, n)
@@ -231,7 +218,7 @@ function Scale(points)
 	}
 	return newpoints;
 }
-function TranslateTo(points, pt) // translates points' centroid to pt
+function TranslateTo(points, pt) // translates points' centroid
 {
 	var c = Centroid(points);
 	var newpoints = new Array();
@@ -240,6 +227,25 @@ function TranslateTo(points, pt) // translates points' centroid to pt
 		var qy = points[i].Y + pt.Y - c.Y;
 		newpoints[newpoints.length] = new Point(qx, qy, points[i].ID);
 	}
+	return newpoints;
+}
+function ComputeNormalizedTurningAngles(points) // $P+
+{
+	var newpoints = new Array();
+	newpoints[0] = new Point(points[0].X, points[0].Y, points[0].ID); // first point
+	for (var i = 1; i < points.length - 1; i++)
+	{
+		var dx = (points[i+1].X - points[i].X) * (points[i].X - points[i-1].X);
+		var dy = (points[i+1].Y - points[i].Y) * (points[i].Y - points[i-1].Y);
+		var dn = Distance(points[i+1], points[i]) * Distance(points[i], points[i-1]);
+		var cosangle = Math.max(-1.0, Math.min(1.0, (dx + dy) / dn)); // ensure [-1,+1]
+		var angle = Math.acos(cosangle) / Math.PI; // normalized angle
+		newpoints[newpoints.length] = new Point(points[i].X, points[i].Y, points[i].ID, angle);
+	}
+	newpoints[newpoints.length] = new Point( // last point
+		points[points.length - 1].X,
+		points[points.length - 1].Y,
+		points[points.length - 1].ID);
 	return newpoints;
 }
 function Centroid(points)
@@ -261,6 +267,13 @@ function PathLength(points) // length traversed by a point path
 			d += Distance(points[i-1], points[i]);
 	}
 	return d;
+}
+function DistanceWithAngle(p1, p2) // $P+
+{
+	var dx = p2.X - p1.X;
+	var dy = p2.Y - p1.Y;
+	var da = p2.Angle - p1.Angle;
+	return Math.sqrt(dx * dx + dy * dy + da * da);
 }
 function Distance(p1, p2) // Euclidean distance between two points
 {
