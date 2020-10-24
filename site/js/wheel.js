@@ -39,7 +39,7 @@ function onLoadEvent()
 
   for (var i = 0; i < items.length; i++) {
     items[i].onmouseover = function haptic() {
-      vibrateFreq(0.075, 75);
+      vibrateFreq(0.04, 75);
       console.log("mouseover")
     }
   }
