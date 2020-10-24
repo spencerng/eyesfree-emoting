@@ -134,7 +134,10 @@ function detectEmoticon() {
   if (_points.length >= 10)
     {
       var result = _r.Recognize(_points);
-      statusText.innerHTML = result.Name + " detected (" + round(result.Score,2) + ")";
+      statusText.innerHTML = result.Name + " detected";
+      if (statusText.id === "testStatus") {
+        statusText.innerHTML += "(" + round(result.Score,2) + ")";
+      } 
     }
     else
     {
