@@ -20,12 +20,12 @@ function displayDemo() {
     var demo = document.getElementById("demoDisplay");
     info.style.display = "none";
     demo.style.display = "block";
+    onLoadEvent();
     if (shapeTrace) {
       traceReplace = document.getElementsByClassName("trace")[0];
     }
     emojiReplace = document.getElementsByClassName("emoji")[0];
     nameText = document.getElementsByClassName("emoji_name")[0];
-    onLoadEvent();
 }
 
 function updateGraphics(index) {
