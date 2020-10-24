@@ -1,3 +1,6 @@
+var pressed = [false, false, false, false, false, false]
+var emotes = ["love", "yay", "laugh", "like", "sad", "angry"]
+
 function sendPulseSequence(duration, count) {
 	var pattern = [];
 	for (var i = 0; i < count; i++) {
@@ -57,24 +60,48 @@ function vibrate(emote, isPulse) {
 	}
 }
 
-//Need func to create duration, delay, and freqency
-document.onclick = function sendEmojiVibrate(e) {
+var manualVibrateSet = false;
+var pulseVibrate = false;
+
+function setPulseVibrate(val) {
+	manualVibrateSet = true;
+	pulseVibrate = val;
+};
+
+function processEmoji(e) {
 	var clickedImg = e.target.src
-	var statusText = document.getElementsByClassName("status")[0]
-	
-	var radios = document.getElementsByName("vibrateType")
-	var isPulse = false
-	if (radios[0].checked) {
-		isPulse = true
+	if (!clickedImg) {
+		return undefined;
 	}
 
-	let emotes = ["love", "yay", "laugh", "like", "sad", "angry"]
 	for (var i = 0; i < emotes.length; i++) {
 		if (clickedImg.includes(emotes[i])) {
-			statusText.innerHTML = emotes[i] + " pressed";
-			vibrate(emotes[i], isPulse)
+			pressed[i] = true;
+			return emotes[i]
+			
 			break;
 		}
 	}
+}
+
+function sendEmojiVibrate(e) {
+	var emoji = processEmoji(e);
+	
+	if (!emoji) {
+		return;
+	}
+	
+
+	var statusText = document.getElementsByClassName("status")[0]
+	
+	var radios = document.getElementsByName("vibrateType")
+	var isPulse = (manualVibrateSet && pulseVibrate) || (radios.length != 0 && radios[0].checked)
+
+	var pressed = vibrate(emoji, isPulse)
+	statusText.innerHTML = emoji + " pressed";
+	
 
 }
+
+//Need func to create duration, delay, and freqency
+document.onclick = sendEmojiVibrate

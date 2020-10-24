@@ -5,10 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" href="../style.css">
+  <script src="../js/vibrate.js"> </script>
+  <script src="../js/receiveTest.js"> </script>
 </head>
-<body>
+<body onload="onLoad()">
   <div class="container">
-    hi
+    <h1>Receive Method A</h1>
+    <div id="nonResultDiv">
+	    <div class="receiveLearn">
+	    <p>This page presents Method A of receving vibrations. <em>Click on each emoji to feel the vibrations that correspond to it.</em> When you have a good feel of each emoji, click the "Next" button.</p>
+	    <p>During each of the following 12 trials, you'll feel a vibration then will be asked to input the emoji that you believe it corresponds to. In each trial, you can replay the vibration at most once.</p>
+	  	</div>
+
+	  	<div class="receiveTest" hidden>
+	  		<h3 id="trialStatus">Trial 1/12</h3>
+	  		<p>Click on the button below to play a vibration, then click the emoji that you believe corresponds with it. You may also repeat the vibration one more time.</p>
+	  		<button id="playButton">Play Vibration</button>
+	  	</div>
+
+		<img src="../assets/yay.png" class="test">
+		<img src="../assets/love.png" class="test">
+		<img src="../assets/laugh.png" class="test">
+		<br>
+		<img src="../assets/sad.png" class="test">
+		<img src="../assets/like.png" class="test">
+		<img src="../assets/angry.png" class="test">
+		<br>
+		<h3 class="receiveLearn status">no emoticon selected</h3>
+		<button class="receiveLearn" id="nextButton">Next</button>
+	</div>
+	<div id="resultDiv" hidden>
+		<h4>Results:</h4>
+		<div id="resultsList">
+		</div>
+		<h4 id="accuracy">Accuracy: 6/12</h4>
+	</div>
   </div>
   
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
