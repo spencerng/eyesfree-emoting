@@ -104,7 +104,7 @@ function printPoints() {
   for (var i = 0; i < _points.length; i++) {
     pointStr += "new Point(" + _points[i].X
     pointStr += "," + _points[i].Y
-    pointStr += "," + _points[i].ID
+	pointStr += "," + _points[i].ID
     pointStr += "),"
   }
   pointStr = pointStr.slice(0, -1) + ")"
