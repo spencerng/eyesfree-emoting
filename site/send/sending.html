@@ -82,7 +82,7 @@
     var emoticonIndex = 0;
     var emoticonsInfo = [];
     var emoticons = ['yay', 'love', 'laugh', 'like', 'sad', 'angry'];
-	var emojiTest = [];
+	var emojiTest = ['laugh','sad','love','yay','angry','like'];
 	var testResults = [];
 	
     for (var i = 0; i < 6; i++) {
@@ -100,7 +100,7 @@
 	
 	function onloading(){
 		onLoadEvent();
-		getTests();
+		//getTests();
 		startTest();
 	}
 	
@@ -110,7 +110,7 @@
 	}
 	
 	function getTests(){
-		for (var i = 0; i < 10; i++){
+		for (var i = 0; i < 6; i++){
 			var rand = Math.floor(Math.random() * 6);
 			emojiTest.push(emoticons[rand]);
 		}
@@ -128,7 +128,7 @@
 	
 	function startEmote(){
       onClickClearStrokes();
-      testIndex = (testIndex) % 10;
+      testIndex = (testIndex) % 6;
 	  
 	  var ind = locEmoticon(emojiTest[testIndex])
 
@@ -150,7 +150,7 @@
       onClickClearStrokes();
       testIndex = (testIndex + 1);
 	  
-	  if(testIndex == 10){
+	  if(testIndex == 6){
 		completeTest();
 		return;
 	  }
@@ -164,7 +164,7 @@
 	
 	function trimResults(){
 		trimmed = [];
-		for (var i = 0; i < 10; i++){
+		for (var i = 0; i < 6; i++){
 			if (testResults[i] == "no emoticon detected"){
 				trimmed.push("no emoticon detected");
 			}
@@ -178,13 +178,12 @@
 	function calcAccuracy(){
 		var score = 0;
 		var results = trimResults()
-		for (var i = 0; i < 10; i++){
+		for (var i = 0; i < 6; i++){
 			if (results[i] == emojiTest[i]){
 				score += 1;
 			}
 		}
-		score *= 10;
-		return score.toString() + "%";
+		return score.toString() + "/6";
 	}
 	
 	function completeTest(){
