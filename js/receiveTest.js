@@ -66,13 +66,14 @@ function displayResults() {
 
 	var list = document.getElementById("resultsList");
 	var resultsList = []
-	var correct = 0;
+  var correct = 0;
+  resultsList.push("<div class='trial_result'><span><b>Expected</b></span><span><b>Got</b></span></div>");
 	for (var i = 0; i < results.length; i++) {
 		if (results[i] === trialOrder[i]) {
 			correct += 1;
-			resultsList.push("<li>" + results[i] + " correct!" + "</li>")
+			resultsList.push("<div class='trial_result'><span>" + results[i] + "</span><span class='correct'>&#x2714</span></div>")
 		} else {
-			resultsList.push("<li>Expected " + trialOrder[i] + ", got " + results[i] + "</li>");
+			resultsList.push("<div class='trial_result'><span>" + trialOrder[i] + "</span><span class='wrong'>" + results[i] + "</span></div>")
 		}
 		
 	}

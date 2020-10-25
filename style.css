@@ -171,15 +171,41 @@ html, body {
   margin: 2rem 0;
 }
 
+/* Results styling */
 #accuracy {
   color: #3A4D8D;
-  margin-top: 2rem;
+  margin-top: 1.25rem;
   font-weight: 600;
 }
 
 #resultDiv {
-  margin-top: 2rem;
+  margin-top: 1.25rem;
 }
+
+.resultDiv {
+  margin-top: 1.25rem;
+}
+
+.trial_result {
+  width: 250px;
+  text-align: center;
+  display: flex;
+  padding: 1px 0.5rem;
+}
+
+.trial_result span {
+  width: 50%;
+}
+
+.correct {
+  color: rgb(125, 172, 125);
+}
+
+.wrong {
+  font-weight: 600;
+  color: maroon;
+}
+
 
 
 /* Scroll wheel styling */
@@ -234,6 +260,9 @@ html, body {
 }
 
 #resultsList {
-  text-align: left; 
+  margin: 0.5rem 0;
   display: inline-block;
+  border-top: 2px #a5bde6 solid;
+  border-bottom: 2px #a5bde6 solid;
+  padding: 0.75rem 0;
 }

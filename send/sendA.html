@@ -51,7 +51,6 @@
     <div class="emoji_name">blah</div>
 	<div hidden class="testing">Hubba</div>
 	<div hidden id="results">No Results Yet</div>
-    <!-- <button class="top_left btn btn-success" onclick="goToTest()">Ready</button> -->
 
     <h4 class="status" id="tocopy" hidden>no emoticon detected</h4>
 	<h4 class="testStatus" id="testCopy">no emoticon detected</h4>
@@ -91,9 +90,8 @@
   </div>
 
   <!-- Result Page -->
-  <div class="resultDiv" style="display: none">
-		<h1>Send Method A</h1>
-		<h4>Results:</h4>
+  <div class="resultDiv container" style="display: none">
+		<h3 class="blue_heading">Send Method A</h3>
 		<div id="resultsList">
 		</div>
     <h4 id="accuracy">Accuracy: 6/12</h4>
@@ -219,10 +217,8 @@
       testIndex = (testIndex + 1);
 	  
 	  if(testIndex == 6){
-		//completeTest();
 		displayBuffer();
 	  	sendPulseSequence(800, 1);
-		//completeTest();
 		return;
 	  }
 
@@ -282,17 +278,16 @@
 		document.getElementById("accuracy").innerHTML = "Accuracy: " + calcAccuracy();
 		
 		var resultsList = []
-		var list = document.getElementById("resultsList");
+    var list = document.getElementById("resultsList");
+    resultsList.push("<div class='trial_result'><span><b>Expected</b></span><span><b>Got</b></span></div>")
 		for (var i = 0; i < trimResults().length; i++) {
 			if (trimResults()[i] === emojiTest[i]) {
-				resultsList.push("<li>" + trimResults()[i] + " correct!" + "</li>")
+        resultsList.push("<div class='trial_result'><span>" + trimResults()[i] + "</span><span class='correct'>&#x2714</span></div>")
 			} else {
-				resultsList.push("<li>Expected " + emojiTest[i] + ", got " + trimResults()[i] + "</li>");
-			}
-			
+        resultsList.push("<div class='trial_result'><span>" + emojiTest[i] + "</span><span class='wrong'>" + trimResults()[i] + "</span></div>")
+      }
 		}
 		list.innerHTML = resultsList.join("");
-		//list.innerHTML = trimResults();
 	}
   </script>
 </body>
