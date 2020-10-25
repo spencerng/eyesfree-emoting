@@ -20,7 +20,9 @@ function displayDemo() {
     var demo = document.getElementById("demoDisplay");
     info.style.display = "none";
     demo.style.display = "block";
+    
     onLoadEvent();
+
     if (shapeTrace) {
       traceReplace = document.getElementsByClassName("trace")[0];
     }

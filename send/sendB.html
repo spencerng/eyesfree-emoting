@@ -116,9 +116,14 @@
     info.style.display = "none";
     test.style.display = "block";
 
-
     onLoadEvent();
-    testIndex = 0;
+  	msg = new SpeechSynthesisUtterance();
+    msg.text = emojiTest[testIndex];
+    window.speechSynthesis.speak(msg);
+    startTest();
+  }
+
+  testIndex = 0;
     emoticonIndex = 0;
     emoticonsInfo = [];
     emoticons = ['yay', 'love', 'laugh', 'like', 'sad', 'angry'];
@@ -136,15 +141,7 @@
     
     emojiReplace = document.getElementsByClassName("emoji")[0];
     nameText = document.getElementsByClassName("emoji_name")[0];
-    console.log(nameText)
     results = document.getElementsByClassName("results")[0];
-  	msg = new SpeechSynthesisUtterance();
-    msg.text = emojiTest[testIndex];
-    window.speechSynthesis.speak(msg);
-    
-
-    startTest();
-  }
 
 	$(document).ready(function(){
 		myVar = setInterval("statusRefresh2()", 10);

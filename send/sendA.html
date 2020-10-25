@@ -110,14 +110,15 @@
   <script>
   var msg;
   function displayTest() {
-  	msg = new SpeechSynthesisUtterance();
-  	msg.text = emojiTest[testIndex];
-	window.speechSynthesis.speak(msg);
     var info = document.getElementById("testInfo");
     var test = document.getElementById("testDisplay");
     info.style.display = "none";
     test.style.display = "block";
+
     onLoadEvent();
+  	msg = new SpeechSynthesisUtterance();
+  	msg.text = emojiTest[testIndex];
+	  window.speechSynthesis.speak(msg);
     startTest();
   }
 
