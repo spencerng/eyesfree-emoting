@@ -7,7 +7,7 @@ Created by [Dawei Huang](https://github.com/huangdaweiUCHICAGO), [Kate Lu](https
 
 ## Usage
 
-* Navigate to [our website](https://bit.ly/eyesfree-emoting) and tap to begin
+* Navigate to [our website](https://bit.ly/eyesfree-emotes) and tap to begin
 * Select a send or receive method to learn the emoji encodings associated with it, then test your accuracy!
 
 For best compatibility with the interfaces, please ensure the following requirements are met:
@@ -23,5 +23,5 @@ Our original user study for A/B testing of the two interfaces is now over, but w
 
 Credit goes to the following for inspiring our input and output methods:
 
-* **Send Method A**: R.-D.Vatavu et. al, [$P Point-Cloud Recognizer](http://depts.washington.edu/acelab/proj/dollar/pdollar.html)
+* **Send Method A**: R.-D. Vatavu et. al, [$P Point-Cloud Recognizer](http://depts.washington.edu/acelab/proj/dollar/pdollar.html)
 * **Receive Method A**: D. Mathew, [vSmileys: Imaging Emotions through Vibration Patterns](https://www.researchgate.net/profile/Deepa_Vasara/publication/248360335_VSmileys_Imaging_Emotions_through_Vibration_Patterns/links/5ab8ec54aca2722b97d0345b/VSmileys-Imaging-Emotions-through-Vibration-Patterns.pdf)
