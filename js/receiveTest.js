@@ -54,13 +54,14 @@ function onLoad() {
 }
 
 function displayBuffer(){
-	document.getElementById("nonResultDiv").hidden = true;
+	document.getElementById("trial").hidden = true;
 	document.getElementsByClassName('buffer')[0].style.display = "block";
 }
 
 function displayResults() {
-	document.getElementsByClassName('buffer')[0].style.display = "none";
-	document.getElementById("nonResultDiv").hidden = true;
+  document.getElementsByClassName('buffer')[0].style.display = "none";
+  document.getElementById("nonResultDiv").hidden = true;
+  document.getElementById("trial").hidden = false;
 	document.getElementById("resultDiv").hidden = false;
 
 	var list = document.getElementById("resultsList");
