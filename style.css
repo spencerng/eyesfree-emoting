@@ -16,6 +16,15 @@ body {
   padding: 0.75rem 2rem;
 }
 
+.small_blue_btn {
+  background-color: #3A4D8D;
+  color: white;
+  font-weight: 600;
+  margin-top: 2rem; 
+  font-size: 18px;
+  border-radius: 2rem;
+  padding: 0.75rem 2rem;
+}
 
 .blue_heading {
   color: #3A4D8D;
@@ -25,6 +34,17 @@ body {
 .bold_info {
   font-weight: 600;
   margin: 1.75rem 0;
+}
+
+.buffer_questions {
+  text-align: left;
+  padding-left: 1rem;
+  margin: 0 1.5rem;
+}
+
+.buffer_questions li {
+  margin: 0.5rem 0;
+  font-size: 16px;
 }
 
 .card {

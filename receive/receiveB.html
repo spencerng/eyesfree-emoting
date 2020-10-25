@@ -38,14 +38,19 @@
 		<button class="receiveLearn" id="nextButton" disabled>Next</button>
 	</div>
 	<!-- Buffer Page -->
-	<div class="buffer" style="display: none">
-		<h1>Thank you for taking our test!</h1>
-		<h3><b>Before proceeding to Results</b>, please answer the following questions for <b>Receive Method B</b> on the Google Form:</h3>
-		<li>How easy was this input method to learn and use?</li>
-		<li>How many emojis (out of 6) do you THINK you correctly input?</li>
-		<br>
-		<button class="btn btn-info" onclick="displayResults()">I filled out Google Form >></button>
-	</div>
+	<div class="buffer container" style="display: none;">
+    <img src="../assets/test_done.png" style="margin-top:3rem; height:65px;">
+    <h3 class="blue_heading" style="padding: 1.5rem 2.5rem 0">Thank you for taking this test!</h3>
+    <h5 style="padding: 1.25rem; line-height: 1.3;">
+      <b>Before proceeding to Results</b>, please answer the following questions for <b>Receive Method B</b> on the Google Form:
+    </h5>
+    <ul class="buffer_questions">
+      <li>How easy were these vibration patterns to learn and distinguish?</li>
+		  <li>How many emojis (out of 12) do you THINK you correctly guessed?</li>
+    </ul>
+    <button onclick="displayResults()" class="btn small_blue_btn">I filled out Google Form >></button>
+  </div>
+
 	<div id="resultDiv" hidden>
 		<h4>Results:</h4>
 		<div id="resultsList">
