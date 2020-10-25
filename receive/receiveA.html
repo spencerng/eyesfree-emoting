@@ -19,16 +19,21 @@
     <div id="nonResultDiv">
       <div class="receiveLearn">
         <h5 class="bold_info">Click on each emoji to feel the vibrations that correspond to it. When you have a good feel of each emoji, click "Next."</h5>
-        <p>During each of the following 12 trials, you'll feel a vibration then will be asked to input the emoji that you believe it corresponds to. In each trial, you can replay the vibration at most once.</p>
+        <!--p>During each of the following 12 trials, you'll feel a vibration then will be asked to input the emoji that you believe it corresponds to. In each trial, you can replay the vibration at most once.</p-->
       </div>
       <div class="receiveTest" hidden="">
         <h3 id="trialStatus">Trial 1/12</h3>
-        <p>Click on the button below to play a vibration, then click the emoji that you believe corresponds with it. You may also repeat the vibration one more time.</p><button id="playButton" class="btn light_blue_btn">Play Vibration</button>
-      </div>
-      <img src="../assets/yay.png" class="test"> <img src="../assets/love.png" class="test"> <img src="../assets/laugh.png" class="test"><br>
+        <div style="text-align: left; padding: 0 1.5rem;">
+      <ol class="instruction_list">
+        <li>Click on the button below to play a vibration.</li>
+        <li>Click on the emoji that you believe corresponds with it. You may also repeat the vibration one more time.</li>
+      </ol>
+    </div>
+
+        <button id="playButton" class="btn light_blue_btn">Play Vibration</button>
+      </div><img src="../assets/yay.png" class="test"> <img src="../assets/love.png" class="test"> <img src="../assets/laugh.png" class="test"><br>
       <img src="../assets/sad.png" class="test"> <img src="../assets/like.png" class="test"> <img src="../assets/angry.png" class="test"><br>
-      <h4 class="receiveLearn status">no emoticon selected</h4>
-      <button class="receiveLearn btn light_blue_btn" id="nextButton" data-toggle="modal" data-target="#exampleModal" disabled>Next</button>
+      <h4 class="receiveLearn status">no emoticon selected</h4><button class="receiveLearn btn light_blue_btn" id="nextButton" data-toggle="modal" data-target="#exampleModal" disabled>Next</button>
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -39,32 +44,32 @@
               By clicking Ready, you confirm that you have learned this method of receiving emoticons and are ready to use them in the study trial.
             </div>
             <div class="modal-footer" style="justify-content: space-between;">
-              <button type="button" class="btn round_btn btn-secondary" data-dismiss="modal">Not Yet</button> <button type="button" onclick="transition()"  class="btn round_btn btn-success" style="color: white;">Ready</button>
+              <button type="button" class="btn round_btn btn-secondary" data-dismiss="modal">Not Yet</button> <button type="button" onclick="transition()" class="btn round_btn btn-success" style="color: white;">Ready</button>
             </div>
           </div>
         </div>
       </div>
-      <div id="resultDiv" hidden="">
-        <div id="resultsList"></div>
-        <h4 id="accuracy">Accuracy: 6/12</h4>
-        <div style="padding: 1rem 1.25rem 0;">
-          <b>Please show your screen</b> to a team member so we can record your results.
-        </div><a href="../menu.html" class="btn small_blue_btn">Return to Menu</a>
-      </div>
-    </div></div>
-    <div class="buffer container" style="display: none;">
-      <img src="../assets/test_done.png" style="height:65px;">
-      <h3 class="blue_heading" style="padding: 1.5rem 2.5rem 0">Thank you for taking this test!</h3>
-      <h5 style="padding: 1.25rem; line-height: 1.3;"><b>Before proceeding to Results</b>, please answer the following questions for <b>Receive Method A</b> on the Google Form:</h5>
-      <ul class="buffer_questions">
-        <li>How easy were these vibration patterns to learn and distinguish?</li>
-        <li>How many emojis (out of 12) do you THINK you correctly guessed?</li>
-      </ul><button onclick="displayResults()" class="btn small_blue_btn">I filled out Google Form &gt;&gt;</button>
     </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script> 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
-    </script>
+    <div id="resultDiv" hidden="">
+      <div id="resultsList"></div>
+      <h4 id="accuracy">Accuracy: 6/12</h4>
+      <div style="padding: 1rem 1.25rem 0;">
+        <b>Please show your screen</b> to a team member so we can record your results.
+      </div><a href="../menu.html" class="btn small_blue_btn">Return to Menu</a>
+    </div>
   </div>
+  <div class="buffer container" style="display: none;">
+    <img src="../assets/test_done.png" style="height:65px;">
+    <h3 class="blue_heading" style="padding: 1.5rem 2.5rem 0">Thank you for taking this test!</h3>
+    <h5 style="padding: 1.25rem; line-height: 1.3;"><b>Before proceeding to Results</b>, please answer the following questions for <b>Receive Method A</b> on the Google Form:</h5>
+    <ul class="buffer_questions">
+      <li>How easy were these vibration patterns to learn and distinguish?</li>
+      <li>How many emojis (out of 12) do you THINK you correctly guessed?</li>
+    </ul><button onclick="displayResults()" class="btn small_blue_btn">I filled out Google Form &gt;&gt;</button>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+  </script> 
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+  </script>
 </body>
 </html>
