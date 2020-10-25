@@ -18,16 +18,17 @@
     <h3 class="blue_heading">Receive Method A</h3>
     <div id="nonResultDiv">
       <div class="receiveLearn">
-        <h5 class="bold_info">Click on each emoji to feel the vibrations that correspond to it.</h5>
-        <p class="bold_info">When you have a good feel of each emoji, click the "Next" button.</p>
+        <h5 class="bold_info">Click on each emoji to feel the vibrations that correspond to it. When you have a good feel of each emoji, click "Next."</h5>
         <p>During each of the following 12 trials, you'll feel a vibration then will be asked to input the emoji that you believe it corresponds to. In each trial, you can replay the vibration at most once.</p>
       </div>
       <div class="receiveTest" hidden="">
         <h3 id="trialStatus">Trial 1/12</h3>
         <p>Click on the button below to play a vibration, then click the emoji that you believe corresponds with it. You may also repeat the vibration one more time.</p><button id="playButton" class="btn light_blue_btn">Play Vibration</button>
-      </div><img src="../assets/yay.png" class="test"> <img src="../assets/love.png" class="test"> <img src="../assets/laugh.png" class="test"><br>
+      </div>
+      <img src="../assets/yay.png" class="test"> <img src="../assets/love.png" class="test"> <img src="../assets/laugh.png" class="test"><br>
       <img src="../assets/sad.png" class="test"> <img src="../assets/like.png" class="test"> <img src="../assets/angry.png" class="test"><br>
-      <h4 class="receiveLearn status">no emoticon selected</h4><button class="receiveLearn btn light_blue_btn" id="nextButton" data-toggle="modal" data-target="#exampleModal" disabled>Next</button>
+      <h4 class="receiveLearn status">no emoticon selected</h4>
+      <button class="receiveLearn btn light_blue_btn" id="nextButton" data-toggle="modal" data-target="#exampleModal" disabled>Next</button>
       <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -38,7 +39,7 @@
               By clicking Ready, you confirm that you have learned this method of receiving emoticons and are ready to use them in the study trial.
             </div>
             <div class="modal-footer" style="justify-content: space-between;">
-              <button type="button" class="btn round_btn btn-secondary" data-dismiss="modal">Not Yet</button> <button type="button" onclick="transition()"  class="btn round_btn btn-success" style="color: white;">Ready</a>
+              <button type="button" class="btn round_btn btn-secondary" data-dismiss="modal">Not Yet</button> <button type="button" onclick="transition()"  class="btn round_btn btn-success" style="color: white;">Ready</button>
             </div>
           </div>
         </div>
@@ -50,7 +51,7 @@
           <b>Please show your screen</b> to a team member so we can record your results.
         </div><a href="../menu.html" class="btn small_blue_btn">Return to Menu</a>
       </div>
-    </div><!-- Buffer Page -->
+    </div></div>
     <div class="buffer container" style="display: none;">
       <img src="../assets/test_done.png" style="height:65px;">
       <h3 class="blue_heading" style="padding: 1.5rem 2.5rem 0">Thank you for taking this test!</h3>

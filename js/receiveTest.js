@@ -12,28 +12,6 @@ function onLoad() {
 
     trialOrder = shuffle(emotes.concat(emotes))
 
-    document.getElementById("nextButton") = function nextClick() {
-    	document.onclick = function checkNextTrial(event) {
-	        var emoji = processEmoji(event)
-	        console.log(emoji)
-	        if (playsLeft == 2 || !emoji) {
-	            return;
-	        }
-
-	        results.push(emoji)
-
-	        if (trialNum == 11) {
-	            //displayResults();
-	            displayBuffer();
-	        } else {
-	            trialNum += 1;
-	            beginTrial();
-	        }
-	    }
-
-	    beginTrial();
-    }
-
     var playButton = document.getElementById("playButton");
     playButton.onclick = function playVibration() {
         vibrate(trialOrder[trialNum], pulseVibrate);
@@ -54,10 +32,29 @@ function transition() {
     var testElements = document.getElementsByClassName("receiveTest");
     changeElementVisibility(testElements, false);
 
+    document.onclick = function checkNextTrial(event) {
+        var emoji = processEmoji(event)
+        console.log(emoji)
+        if (playsLeft == 2 || !emoji) {
+            return;
+        }
+
+        results.push(emoji)
+        console.log(trialNum)
+        if (trialNum == 11) {
+            //displayResults();
+            displayBuffer();
+        } else {
+            trialNum += 1;
+            beginTrial();
+        }
+    }
+
     beginTrial();
 }
 
 function displayBuffer() {
+	console.log("displaying buffer")
     document.getElementById("trial").hidden = true;
     document.getElementsByClassName('buffer')[0].style.display = "block";
 }

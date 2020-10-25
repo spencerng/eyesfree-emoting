@@ -267,3 +267,7 @@ html, body {
   border-bottom: 2px #a5bde6 solid;
   padding: 0.75rem 0;
 }
+
+#nextButton {
+  margin: 0 0 1rem 0;
+}
