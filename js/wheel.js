@@ -78,7 +78,7 @@ function mouseDown(event) {
         wheelSel.style.display = 'block';
 
         if (hidden) {
-          wheelSel.style.opacity = '0';
+            wheelSel.style.opacity = '0';
         }
 
         var x = event.pageX;

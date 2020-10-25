@@ -3,7 +3,7 @@ var performAutodetect;
 //
 // Startup
 //
-var hidden=false;
+var hidden = false;
 var _isDown, _points, _strokeID, _r, _g, _rc; // global variables
 function onLoadEvent() {
     _points = new Array(); // point array for current stroke
