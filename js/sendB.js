@@ -97,7 +97,7 @@ async function nextEmoticon() {
     testResults.push(x)
     testIndex = (testIndex + 1);
 
-    await sleep(750);
+    await sleep(450);
 
     if (testIndex == 6) {
         sendPulseSequence(800, 1);
