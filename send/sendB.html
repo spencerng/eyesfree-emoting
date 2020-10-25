@@ -50,7 +50,6 @@
     <div class="emoji_name">blah</div>
 	<div hidden class="testing">Hubba</div>
 	<div hidden id="results">No Results Yet</div>
-    <!-- <button class="top_left btn btn-success" onclick="goToTest()">Ready</button> -->
 
     <div style="margin: 1rem 0">
       <button hidden class="btn btn-success" onclick="goToTest()">Finish</button>
@@ -99,11 +98,11 @@
   <div class="resultDiv" style="display: none">
 		<h1>Send Method B</h1>
 		<h4>Results:</h4>
-
 		<div id="resultsList">
 		</div>
-    
-		<h4>Accuracy: <div id="accuracy">6/12</div></h4>
+    <h4 id="accuracy">Accuracy: 6/12</h4>
+    <div style="padding: 1rem 1.25rem 0;"><b>Please show your screen</b> to a team member so we can record your results.</div>
+    <a href="../menu.html" class="btn small_blue_btn">Return to Menu</a>
 	</div>
   
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
@@ -266,7 +265,7 @@
 		document.getElementsByClassName('outer')[0].style.display = "none";
 		document.getElementsByClassName('resultDiv')[0].style.display = "block";
 		
-		document.getElementById("accuracy").innerHTML = calcAccuracy();
+		document.getElementById("accuracy").innerHTML = "Accuracy: " + calcAccuracy();
 		
 		var resultsList = []
 		var list = document.getElementById("resultsList");
