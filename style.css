@@ -20,7 +20,7 @@ body {
   background-color: #3A4D8D;
   color: white;
   font-weight: 600;
-  margin-top: 2rem; 
+  margin: 2rem 0; 
   font-size: 18px;
   border-radius: 2rem;
   padding: 0.75rem 2rem;
@@ -138,10 +138,10 @@ body {
   position: absolute;
   z-index: -1;
   text-align: center;
-  top: 48vh;
+  top: 42vh;
   left: 50%;
-  margin-left: -95px;
-  width: 190px;
+  margin-left: -90px;
+  width: 180px;
 }
 
 canvas {
