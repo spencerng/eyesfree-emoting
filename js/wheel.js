@@ -1,21 +1,9 @@
 var lastTouched = undefined;
 
+var hidden = false;
 var emojis = ["yay", "sad", "angry", "laugh", "love", "like"]
 var showWheel;
 
-$.fn.extend({
-    disableSelection: function() {
-        this.each(function() {
-            this.onselectstart = function() {
-                return false;
-            };
-            this.unselectable = "on";
-            $(this).css('-moz-user-select', 'none');
-            $(this).css('-webkit-user-select', 'none');
-        });
-        return this;
-    }
-});
 
 function onLoadEvent() {
     var dpi = getDPI();
@@ -88,6 +76,11 @@ function mouseDown(event) {
         vibrateFreq(0.075, 20);
         var wheelSel = document.getElementById("wheel");
         wheelSel.style.display = 'block';
+
+        if (hidden) {
+          wheelSel.style.opacity = '0';
+        }
+
         var x = event.pageX;
         var y = event.pageY;
 

@@ -3,6 +3,7 @@ var performAutodetect;
 //
 // Startup
 //
+var hidden=false;
 var _isDown, _points, _strokeID, _r, _g, _rc; // global variables
 function onLoadEvent() {
     _points = new Array(); // point array for current stroke
@@ -24,6 +25,7 @@ function onLoadEvent() {
 
     _isDown = false;
 }
+
 
 function touchStartEvent(event) {
     mouseDownEvent(event.touches[0].pageX, event.touches[0].pageY, 0)
@@ -149,6 +151,10 @@ function detectEmoticon() {
 }
 
 function drawConnectedPoint(from, to) {
+    console.log(hidden)
+    if (hidden) {
+        return;
+    }
     _g.beginPath();
     _g.moveTo(_points[from].X, _points[from].Y);
     _g.lineTo(_points[to].X, _points[to].Y);
