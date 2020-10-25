@@ -54,7 +54,7 @@ function transition() {
 }
 
 function displayBuffer() {
-	console.log("displaying buffer")
+    console.log("displaying buffer")
     document.getElementById("trial").hidden = true;
     document.getElementsByClassName('buffer')[0].style.display = "block";
 }
